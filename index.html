@@ -46,6 +46,7 @@
             position: relative;
             cursor: pointer;
             overflow: hidden;
+            transition: background-color 0.3s ease;
         }
 
         .hero-title {
@@ -55,6 +56,7 @@
             letter-spacing: 2px;
             margin-bottom: 20px;
             min-height: 1.2em;
+            transition: color 0.3s ease;
         }
 
         .hero-subtitle {
@@ -62,6 +64,7 @@
             font-weight: 400;
             letter-spacing: 1px;
             min-height: 1.5em;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
 
         .typewriter-cursor {
@@ -88,11 +91,68 @@
             border-radius: 50%;
             cursor: pointer;
             pointer-events: all;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             z-index: 150;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Progress ring that fills as you hold */
+        .scroll-button::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(#4CAF50 var(--progress, 0deg), transparent var(--progress, 0deg));
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .scroll-button.holding::before {
+            opacity: 1;
+        }
+
+        /* Subtle idle pulse to draw attention */
+        .scroll-button:not(.holding) {
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        /* Scale up when holding */
+        .scroll-button.holding {
+            transform: translateX(-50%) scale(1.15);
+            animation: none;
+        }
+
+        .scroll-button-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1A1A1A;
+            opacity: 0.7;
+            pointer-events: none;
+            white-space: nowrap;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .scroll-button:hover .scroll-button-label {
+            opacity: 1;
         }
 
         .arrow-icon {
@@ -100,8 +160,8 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 25px solid #000;
-            transition: all 0.3s ease;
+            border-top: 25px solid #999;
+            transition: border-top-color 0.3s ease;
         }
 
         .scroll-button.escape-hint {
@@ -136,6 +196,43 @@
 
         .snake-pop {
             animation: snakePop 0.4s ease-out forwards !important;
+        }
+
+        .tile-fall {
+            animation: tileFall 1s ease-in forwards !important;
+        }
+
+        @keyframes tileFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(100vh) rotate(25deg);
+                opacity: 0;
+            }
+        }
+
+        .tile-fall-escape {
+            animation: tileFallEscape 2s ease-in forwards !important;
+            transition: opacity 0.5s ease-out 2s;
+        }
+
+        @keyframes tileFallEscape {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(var(--fall-distance)) rotate(var(--fall-rotation));
+                opacity: 0.25;
+            }
         }
         .snake-segment {
             position: absolute;
@@ -322,7 +419,6 @@
 
         .about-section.animated .profile-card-inner {
             transform: rotateY(0deg);
-            animation: spin360 1s ease-in-out 1.5s;
         }
 
         .about-section.quick-twirl .profile-card-inner {
@@ -420,6 +516,7 @@
             margin: 100px 0;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
         .work-intro::before {
@@ -1071,8 +1168,9 @@
     <section class="hero" id="heroSection">
         <h1 class="hero-title">Callahan D. Carvalho</h1>
         <p class="hero-subtitle">Game Designer | Systemic Design</p>
-        <div class="scroll-button" id="scrollArrow" onclick="SnakeGame.popAllSnakesAndScroll()">
+        <div class="scroll-button" id="scrollArrow">
             <div class="arrow-icon"></div>
+            <div class="scroll-button-label">Hold</div>
         </div>
     </section>
 
@@ -1168,7 +1266,7 @@
                     status: 'In Development',
                     date: 'March 2025 - Present',
                     coverImage: 'assets/Digital/bardo/game art 1.jpg',
-                    description: 'A 2D side-scrolling platformer where death means more than just failure. As Hudson, a middle-aged journalist in the 1970s, you traverse around a mystifying and ever-shifting tower in search of your son and elderly father. Dying in a room allows the player to respawn in a randomly selected new room, with reduced humanity. When Hudson loses all of his humanity, he submits to the tower and the run is lost!<br><br><strong>Death becomes strategy and loss becomes the way forward.</strong>',
+                    description: 'A 2D side-scrolling platformer where death means more than just failure. As Hudson, a middle-aged journalist in the 1970s, you traverse around a mystifying and ever-shifting tower in search of your son and elderly father. Dying in a room allows the player to respawn in a randomly selected new room, with reduced humanity. When Hudson loses all of his humanity, he submits to the tower and the run is lost!<br><br><strong>Death turns into strategy and loss becomes the way forward.</strong>',
                     workDone: [
                         'Built a Finite State Machine for player movement and animation states',
                         'Developed a resource manager that manages health, humanity meter and coins and also interacts seamlessly with the UI',
@@ -1514,8 +1612,16 @@
             }
         });
 
-        // Typewriter Effect
+        // Typewriter Effect with cancellation support
+        let currentTypewriterTimeout = null;
+
         function typewriter(element, text, speed, callback) {
+            // Cancel any ongoing typewriter
+            if (currentTypewriterTimeout) {
+                clearTimeout(currentTypewriterTimeout);
+                currentTypewriterTimeout = null;
+            }
+
             let i = 0;
             element.textContent = '';
 
@@ -1523,9 +1629,12 @@
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
+                    currentTypewriterTimeout = setTimeout(type, speed);
+                } else {
+                    currentTypewriterTimeout = null;
+                    if (callback) {
+                        callback();
+                    }
                 }
             }
 
@@ -1541,10 +1650,144 @@
             // Type title first, then subtitle
             typewriter(title, titleText, 80, function() {
                 setTimeout(function() {
-                    typewriter(subtitle, subtitleText, 60);
+                    typewriter(subtitle, subtitleText, 60, function() {
+                        // After initial typing, start message rotation
+                        HeroMessages.init();
+                    });
                 }, 300);
             });
         }
+
+        // Hero Message Rotation System
+        const HeroMessages = {
+            messages: [
+                "Try hovering above the snakes to play!",
+                "Click and watch them grow",
+                "One pops, two return in its place",
+                "Hold the arrow below to proceed",
+                "Thanks for stopping by!",
+                "Curious? Keep exploring...",
+                "Each interaction reveals more"
+            ],
+
+            completionMessages: [
+                "Well done! Enjoy the journey",
+                "Perfect! Let's continue",
+                "Great job! Thanks for playing",
+            ],
+
+            originalText: "Game Designer | Systemic Design",
+            messageTimer: null,
+            currentMessageIndex: 0,
+            hasShownCompletionMessage: false,
+            isActive: false,
+            observer: null,
+
+            init() {
+                // Start message rotation after 3s
+                setTimeout(() => {
+                    if (!this.hasShownCompletionMessage) {
+                        this.isActive = true;
+                        this.startMessageRotation();
+                    }
+                }, 3000);
+
+                // Watch for hero section leaving viewport
+                this.setupViewportObserver();
+            },
+
+            setupViewportObserver() {
+                const heroSection = document.getElementById('heroSection');
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) {
+                            // Hero section left viewport - restore original message
+                            this.restoreOriginalMessage();
+                        }
+                    });
+                }, {
+                    threshold: 0.1  // Trigger when less than 10% is visible
+                });
+
+                this.observer.observe(heroSection);
+            },
+
+            restoreOriginalMessage() {
+                // Stop rotation
+                this.isActive = false;
+                clearTimeout(this.messageTimer);
+
+                // Clear any ongoing typewriter
+                if (currentTypewriterTimeout) {
+                    clearTimeout(currentTypewriterTimeout);
+                    currentTypewriterTimeout = null;
+                }
+
+                const subtitle = document.querySelector('.hero-subtitle');
+                subtitle.style.opacity = '0';
+                setTimeout(() => {
+                    subtitle.textContent = this.originalText;
+                    subtitle.style.opacity = '1';
+                }, 300);
+            },
+
+            startMessageRotation() {
+                const showNextMessage = () => {
+                    if (this.hasShownCompletionMessage || !this.isActive) return;
+
+                    const subtitle = document.querySelector('.hero-subtitle');
+                    const message = this.messages[this.currentMessageIndex];
+
+                    // Fade out, type new message
+                    subtitle.style.opacity = '0';
+                    setTimeout(() => {
+                        typewriter(subtitle, message, 50, () => {
+                            subtitle.style.opacity = '1';
+                        });
+                    }, 300);
+
+                    // Move to next message
+                    this.currentMessageIndex = (this.currentMessageIndex + 1) % this.messages.length;
+
+                    // Schedule next message (random 5-7s)
+                    const nextDelay = Math.random() * 2000 + 5000; // 5000-7000ms
+                    this.messageTimer = setTimeout(showNextMessage, nextDelay);
+                };
+
+                showNextMessage();
+            },
+
+            showCompletionMessage() {
+                if (this.hasShownCompletionMessage) return;
+
+                this.hasShownCompletionMessage = true;
+                this.isActive = false;
+                clearTimeout(this.messageTimer);
+
+                const subtitle = document.querySelector('.hero-subtitle');
+                const message = this.completionMessages[Math.floor(Math.random() * this.completionMessages.length)];
+
+                // Immediately stop any ongoing typewriter and clear text
+                if (currentTypewriterTimeout) {
+                    clearTimeout(currentTypewriterTimeout);
+                    currentTypewriterTimeout = null;
+                }
+                subtitle.textContent = '';
+
+                subtitle.style.opacity = '0';
+                setTimeout(() => {
+                    typewriter(subtitle, message, 50, () => {
+                        subtitle.style.opacity = '1';
+                    });
+                }, 300);
+            },
+
+            stop() {
+                this.isActive = false;
+                clearTimeout(this.messageTimer);
+            }
+        };
 
         // Snake Game
         const SnakeGame = {
@@ -1819,21 +2062,259 @@
                     arrow.classList.remove('escape-hint');
                 }
 
-                // Get all current snake IDs (capture before popping)
-                const snakeIds = this.snakes.map(s => s.id);
+                // Show completion message
+                HeroMessages.showCompletionMessage();
 
-                // Pop all snakes with staggered timing
-                snakeIds.forEach((snakeId, index) => {
-                    setTimeout(() => {
-                        this.removeSnake(snakeId);
-                    }, index * 50);
+                // Get all snake segments and group by row (Y position)
+                const allSegments = document.querySelectorAll('.snake-segment');
+                const segmentsByRow = new Map();
+
+                allSegments.forEach(segment => {
+                    const top = parseInt(segment.style.top);
+                    const gridY = Math.floor(top / this.gridSize);
+
+                    if (!segmentsByRow.has(gridY)) {
+                        segmentsByRow.set(gridY, []);
+                    }
+                    segmentsByRow.get(gridY).push(segment);
                 });
 
-                // Wait for all pop animations to complete, then scroll
-                const totalDelay = snakeIds.length * 50 + 500;
+                // Sort rows from top to bottom
+                const sortedRows = Array.from(segmentsByRow.entries()).sort((a, b) => a[0] - b[0]);
+
+                // Get position references for escaping segments
+                const workIntro = document.querySelector('.work-intro');
+
+                // Apply falling animation to each row with staggered timing
+                sortedRows.forEach(([rowY, segments], rowIndex) => {
+                    setTimeout(() => {
+                        segments.forEach(segment => {
+                            // Randomly select some segments to escape (15% chance)
+                            if (Math.random() < 0.15) {
+                                // Clone this segment to make it escape
+                                const escapeSegment = segment.cloneNode(true);
+                                const segmentRect = segment.getBoundingClientRect();
+
+                                // Position it absolutely on the page
+                                escapeSegment.style.position = 'fixed';
+                                escapeSegment.style.left = segmentRect.left + 'px';
+                                escapeSegment.style.top = segmentRect.top + 'px';
+                                escapeSegment.style.zIndex = '1500';
+                                escapeSegment.style.width = '20px';
+                                escapeSegment.style.height = '20px';
+
+                                document.body.appendChild(escapeSegment);
+
+                                // Animate it falling down to work-intro section
+                                setTimeout(() => {
+                                    const workRect = workIntro.getBoundingClientRect();
+                                    const fallDistance = workRect.top - segmentRect.top + (Math.random() * 300 + 100);
+                                    const fallRotation = Math.random() * 60 - 30;
+
+                                    escapeSegment.style.setProperty('--fall-distance', `${fallDistance}px`);
+                                    escapeSegment.style.setProperty('--fall-rotation', `${fallRotation}deg`);
+                                    escapeSegment.classList.add('tile-fall-escape');
+
+                                    // After falling, re-position as decoration in work-intro
+                                    setTimeout(() => {
+                                        escapeSegment.style.position = 'absolute';
+                                        escapeSegment.style.left = (Math.random() * 90 + 5) + '%';
+                                        escapeSegment.style.top = (Math.random() * 80 + 10) + '%';
+                                        escapeSegment.style.transform = `rotate(${fallRotation}deg)`;
+                                        escapeSegment.style.opacity = '0.2';
+                                        escapeSegment.style.zIndex = '0';
+
+                                        workIntro.appendChild(escapeSegment);
+                                    }, 2000);
+                                }, 50);
+                            }
+
+                            // All segments get normal falling animation
+                            segment.classList.add('tile-fall');
+                            setTimeout(() => segment.remove(), 1000); // Remove after animation completes
+                        });
+                    }, rowIndex * 100); // 100ms delay between each row
+                });
+
+                // Clear the snakes array and scroll
+                const totalDelay = sortedRows.length * 100 + 1100;
                 setTimeout(() => {
+                    this.snakes = [];
                     document.querySelector('.about-section').scrollIntoView({behavior: 'smooth'});
                 }, totalDelay);
+            }
+        };
+
+        // Hold-to-Scroll Button - Day/Night Cycle Toggle
+        const HoldButton = {
+            holdTimer: null,
+            holdStartTime: null,
+            completed: false,
+            currentMode: 'day',  // 'day' or 'night' - tracks current cycle
+            targetMode: 'day',
+            HOLD_DURATION: 1500,
+
+            // Color definitions for day/night cycles
+            colors: {
+                day: {
+                    bg: { r: 255, g: 229, b: 232 },    // #FFE5E8 - soft pink
+                    text: { r: 26, g: 26, b: 26 },      // #1A1A1A - dark
+                    arrow: { r: 26, g: 26, b: 26 }      // #1A1A1A - black (matches text)
+                },
+                night: {
+                    bg: { r: 20, g: 33, b: 66 },       // #142142 - navy blue
+                    text: { r: 255, g: 255, b: 255 },   // #FFFFFF - white
+                    arrow: { r: 255, g: 255, b: 255 }   // #FFFFFF - white (matches text)
+                }
+            },
+
+            init() {
+                const scrollButton = document.getElementById('scrollArrow');
+                const arrowIcon = document.querySelector('.arrow-icon');
+
+                // Arrow hover effect - turn black/white based on cycle
+                scrollButton.addEventListener('mouseenter', () => {
+                    if (!this.holdTimer) {  // Only if not currently holding
+                        const arrowColor = this.colors[this.currentMode].arrow;
+                        arrowIcon.style.borderTopColor = `rgb(${arrowColor.r}, ${arrowColor.g}, ${arrowColor.b})`;
+                    }
+                });
+
+                scrollButton.addEventListener('mousedown', () => {
+                    this.startHold();
+                });
+
+                scrollButton.addEventListener('mouseup', () => {
+                    if (!this.completed) {
+                        this.cancelHold(false);
+                    }
+                    this.completed = false;
+                });
+
+                scrollButton.addEventListener('mouseleave', () => {
+                    if (!this.holdTimer) {  // Only reset to gray if not holding
+                        arrowIcon.style.borderTopColor = '#999';
+                    }
+                    if (!this.completed) {
+                        this.cancelHold(false);
+                    }
+                    this.completed = false;
+                });
+
+                // Touch support for mobile
+                scrollButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.startHold();
+                });
+
+                scrollButton.addEventListener('touchend', () => {
+                    if (!this.completed) {
+                        this.cancelHold(false);
+                    }
+                    this.completed = false;
+                });
+
+                scrollButton.addEventListener('touchcancel', () => {
+                    if (!this.completed) {
+                        this.cancelHold(false);
+                    }
+                    this.completed = false;
+                });
+            },
+
+            startHold() {
+                this.completed = false;
+                // Toggle to opposite cycle
+                this.targetMode = this.currentMode === 'day' ? 'night' : 'day';
+                this.holdStartTime = Date.now();
+
+                // Add holding class for visual feedback
+                const scrollButton = document.getElementById('scrollArrow');
+                scrollButton.classList.add('holding');
+
+                this.updateProgress();
+            },
+
+            updateProgress() {
+                const elapsed = Date.now() - this.holdStartTime;
+                const progress = Math.min(elapsed / this.HOLD_DURATION, 1);
+
+                const heroSection = document.getElementById('heroSection');
+                const heroTitle = document.querySelector('.hero-title');
+                const heroSubtitle = document.querySelector('.hero-subtitle');
+                const arrowIcon = document.querySelector('.arrow-icon');
+                const scrollButton = document.getElementById('scrollArrow');
+                const scrollButtonLabel = document.querySelector('.scroll-button-label');
+
+                // Update progress ring
+                scrollButton.style.setProperty('--progress', `${progress * 360}deg`);
+
+                // Interpolate from current cycle to target cycle
+                const fromColors = this.colors[this.currentMode];
+                const toColors = this.colors[this.targetMode];
+
+                // Background color interpolation
+                const bgR = Math.floor(fromColors.bg.r + progress * (toColors.bg.r - fromColors.bg.r));
+                const bgG = Math.floor(fromColors.bg.g + progress * (toColors.bg.g - fromColors.bg.g));
+                const bgB = Math.floor(fromColors.bg.b + progress * (toColors.bg.b - fromColors.bg.b));
+                heroSection.style.backgroundColor = `rgb(${bgR}, ${bgG}, ${bgB})`;
+
+                // Text color interpolation (also applies to label)
+                const textR = Math.floor(fromColors.text.r + progress * (toColors.text.r - fromColors.text.r));
+                const textG = Math.floor(fromColors.text.g + progress * (toColors.text.g - fromColors.text.g));
+                const textB = Math.floor(fromColors.text.b + progress * (toColors.text.b - fromColors.text.b));
+                const textColor = `rgb(${textR}, ${textG}, ${textB})`;
+                heroTitle.style.color = textColor;
+                heroSubtitle.style.color = textColor;
+                scrollButtonLabel.style.color = textColor;
+
+                // Arrow color interpolation
+                const arrowR = Math.floor(fromColors.arrow.r + progress * (toColors.arrow.r - fromColors.arrow.r));
+                const arrowG = Math.floor(fromColors.arrow.g + progress * (toColors.arrow.g - fromColors.arrow.g));
+                const arrowB = Math.floor(fromColors.arrow.b + progress * (toColors.arrow.b - fromColors.arrow.b));
+                arrowIcon.style.borderTopColor = `rgb(${arrowR}, ${arrowG}, ${arrowB})`;
+
+                if (progress < 1) {
+                    this.holdTimer = requestAnimationFrame(() => this.updateProgress());
+                } else {
+                    // Complete - switch to target cycle permanently
+                    this.completed = true;
+                    this.currentMode = this.targetMode;  // Update current cycle
+                    this.cancelHold(true);
+                    SnakeGame.popAllSnakesAndScroll();
+                }
+            },
+
+            cancelHold(keepColors = false) {
+                if (this.holdTimer) {
+                    cancelAnimationFrame(this.holdTimer);
+                    this.holdTimer = null;
+                }
+
+                // Remove holding class
+                const scrollButton = document.getElementById('scrollArrow');
+                const arrowIcon = document.querySelector('.arrow-icon');
+                scrollButton.classList.remove('holding');
+                scrollButton.style.setProperty('--progress', '0deg');
+
+                if (!keepColors) {
+                    // Reset to current cycle colors (not CSS default)
+                    const heroSection = document.getElementById('heroSection');
+                    const heroTitle = document.querySelector('.hero-title');
+                    const heroSubtitle = document.querySelector('.hero-subtitle');
+                    const scrollButtonLabel = document.querySelector('.scroll-button-label');
+
+                    const currentColors = this.colors[this.currentMode];
+
+                    heroSection.style.backgroundColor = `rgb(${currentColors.bg.r}, ${currentColors.bg.g}, ${currentColors.bg.b})`;
+                    heroTitle.style.color = `rgb(${currentColors.text.r}, ${currentColors.text.g}, ${currentColors.text.b})`;
+                    heroSubtitle.style.color = `rgb(${currentColors.text.r}, ${currentColors.text.g}, ${currentColors.text.b})`;
+                    scrollButtonLabel.style.color = `rgb(${currentColors.text.r}, ${currentColors.text.g}, ${currentColors.text.b})`;
+                    arrowIcon.style.borderTopColor = `rgb(${currentColors.arrow.r}, ${currentColors.arrow.g}, ${currentColors.arrow.b})`;
+                }
+
+                // Always return arrow to gray when not holding
+                arrowIcon.style.borderTopColor = '#999';
             }
         };
 
@@ -1884,6 +2365,7 @@
             initAboutAnimation();
             initHeroTypewriter();
             SnakeGame.init();
+            HoldButton.init();
         });
     </script>
 
