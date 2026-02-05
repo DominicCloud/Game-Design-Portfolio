@@ -234,6 +234,652 @@
                 opacity: 0.25;
             }
         }
+
+        /* Swoosh Animations */
+        .swoosh {
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes swoosh1 {
+            0% {
+                transform: translateX(-200px) translateY(0) rotate(-15deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px)) translateY(-50px) rotate(-15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swoosh2 {
+            0% {
+                transform: translateX(-200px) translateY(0) rotate(15deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px)) translateY(50px) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        .swoosh-1 {
+            animation: swoosh1 8s ease-in-out infinite;
+            top: 20%;
+        }
+
+        .swoosh-2 {
+            animation: swoosh2 10s ease-in-out infinite;
+            animation-delay: 2s;
+            top: 40%;
+        }
+
+        .swoosh-3 {
+            animation: swoosh1 12s ease-in-out infinite;
+            animation-delay: 4s;
+            top: 60%;
+        }
+
+        .swoosh-4 {
+            animation: swoosh2 9s ease-in-out infinite;
+            animation-delay: 6s;
+            top: 80%;
+        }
+
+        /* Shooting Star Animations */
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #FFF;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 4px #FFF;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.8));
+            transform: rotate(45deg);
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(800px) translateY(800px) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        .star-1 {
+            animation: shootingStar 2s ease-in infinite;
+            top: -5%;
+            left: 5%;
+        }
+
+        .star-2 {
+            animation: shootingStar 2.2s ease-in infinite;
+            animation-delay: 1.2s;
+            top: -5%;
+            left: 40%;
+        }
+
+        .star-3 {
+            animation: shootingStar 2.5s ease-in infinite;
+            animation-delay: 2.4s;
+            top: -5%;
+            left: 70%;
+        }
+
+        .star-4 {
+            animation: shootingStar 1.8s ease-in infinite;
+            animation-delay: 3.6s;
+            top: -5%;
+            left: 25%;
+        }
+
+        .star-5 {
+            animation: shootingStar 2.3s ease-in infinite;
+            animation-delay: 4.8s;
+            top: -5%;
+            left: 55%;
+        }
+
+        .star-6 {
+            animation: shootingStar 2.1s ease-in infinite;
+            animation-delay: 1.8s;
+            top: -5%;
+            left: 15%;
+        }
+
+        .star-7 {
+            animation: shootingStar 1.9s ease-in infinite;
+            animation-delay: 3s;
+            top: -5%;
+            left: 80%;
+        }
+
+        .star-8 {
+            animation: shootingStar 2.4s ease-in infinite;
+            animation-delay: 0.6s;
+            top: -5%;
+            left: 35%;
+        }
+
+        .star-9 {
+            animation: shootingStar 2.2s ease-in infinite;
+            animation-delay: 4.2s;
+            top: -5%;
+            left: 65%;
+        }
+
+        .star-10 {
+            animation: shootingStar 2s ease-in infinite;
+            animation-delay: 5.4s;
+            top: -5%;
+            left: 50%;
+        }
+
+        /* Ultra Complex Background System with Pastel Colors */
+        .floating-shapes-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Animated Wave Background Layers */
+        .wave-layer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .wave-1 {
+            background: linear-gradient(180deg,
+                transparent 0%,
+                transparent 60%,
+                rgba(255, 218, 224, 0.4) 70%,
+                rgba(255, 218, 224, 0.6) 100%);
+            animation: waveMove 25s ease-in-out infinite;
+        }
+
+        .wave-2 {
+            background: linear-gradient(180deg,
+                transparent 0%,
+                transparent 50%,
+                rgba(218, 232, 252, 0.4) 65%,
+                rgba(218, 232, 252, 0.6) 100%);
+            animation: waveMove 30s ease-in-out infinite reverse;
+        }
+
+        .wave-3 {
+            background: linear-gradient(180deg,
+                transparent 0%,
+                transparent 55%,
+                rgba(230, 245, 220, 0.4) 70%,
+                rgba(230, 245, 220, 0.6) 100%);
+            animation: waveMove 35s ease-in-out infinite;
+        }
+
+        @keyframes waveMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50%); }
+        }
+
+        /* Rotating Geometric Mandalas */
+        .mandala {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .mandala-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            border: 3px solid;
+            transform-origin: center;
+        }
+
+        .mandala-1 {
+            top: 15%;
+            left: 10%;
+            animation: mandalaRotate1 40s linear infinite;
+        }
+
+        .mandala-1 .mandala-ring:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border-color: #FFB4D6;
+            animation: ringPulse1 8s ease-in-out infinite;
+        }
+
+        .mandala-1 .mandala-ring:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            margin: -100px 0 0 -100px;
+            border-color: #C4A1FF;
+            border-style: dashed;
+            animation: ringPulse2 10s ease-in-out infinite;
+        }
+
+        .mandala-1 .mandala-ring:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            margin: -125px 0 0 -125px;
+            border-color: #A8E6CF;
+            animation: ringPulse3 12s ease-in-out infinite;
+        }
+
+        .mandala-1 .mandala-ring:nth-child(4) {
+            width: 300px;
+            height: 300px;
+            margin: -150px 0 0 -150px;
+            border-color: #FFE5B4;
+            border-style: dotted;
+            animation: ringPulse1 14s ease-in-out infinite reverse;
+        }
+
+        .mandala-2 {
+            top: 50%;
+            right: 8%;
+            animation: mandalaRotate2 35s linear infinite reverse;
+        }
+
+        .mandala-2 .mandala-ring:nth-child(1) {
+            width: 180px;
+            height: 180px;
+            margin: -90px 0 0 -90px;
+            border-color: #B4E1FF;
+            animation: ringPulse2 9s ease-in-out infinite;
+        }
+
+        .mandala-2 .mandala-ring:nth-child(2) {
+            width: 230px;
+            height: 230px;
+            margin: -115px 0 0 -115px;
+            border-color: #FFD4E5;
+            border-style: dashed;
+            animation: ringPulse3 11s ease-in-out infinite;
+        }
+
+        .mandala-2 .mandala-ring:nth-child(3) {
+            width: 280px;
+            height: 280px;
+            margin: -140px 0 0 -140px;
+            border-color: #D4F1F4;
+            animation: ringPulse1 13s ease-in-out infinite;
+        }
+
+        .mandala-3 {
+            bottom: 15%;
+            left: 15%;
+            animation: mandalaRotate3 45s linear infinite;
+        }
+
+        .mandala-3 .mandala-ring:nth-child(1) {
+            width: 160px;
+            height: 160px;
+            margin: -80px 0 0 -80px;
+            border-color: #E5D4FF;
+            animation: ringPulse3 10s ease-in-out infinite;
+        }
+
+        .mandala-3 .mandala-ring:nth-child(2) {
+            width: 210px;
+            height: 210px;
+            margin: -105px 0 0 -105px;
+            border-color: #FFE1CC;
+            border-style: dotted;
+            animation: ringPulse1 12s ease-in-out infinite reverse;
+        }
+
+        .mandala-3 .mandala-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            margin: -130px 0 0 -130px;
+            border-color: #D4FFE8;
+            animation: ringPulse2 14s ease-in-out infinite;
+        }
+
+        @keyframes mandalaRotate1 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes mandalaRotate2 {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes mandalaRotate3 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        @keyframes ringPulse1 {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.15; }
+            50% { transform: scale(1.15) rotate(180deg); opacity: 0.25; }
+        }
+
+        @keyframes ringPulse2 {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.12; }
+            50% { transform: scale(0.9) rotate(-180deg); opacity: 0.22; }
+        }
+
+        @keyframes ringPulse3 {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.18; }
+            50% { transform: scale(1.1) rotate(90deg); opacity: 0.28; }
+        }
+
+        /* Floating Geometric Shapes with Trails */
+        .complex-shape {
+            position: absolute;
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        .hex-shape {
+            width: 60px;
+            height: 70px;
+            background: #FFD6E8;
+            opacity: 0.2;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .star-shape {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 40px solid #C4D4FF;
+            opacity: 0.2;
+            position: relative;
+        }
+
+        .star-shape:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 40px solid #C4D4FF;
+            top: 15px;
+            left: -25px;
+        }
+
+        .pentagon-shape {
+            width: 54px;
+            height: 50px;
+            background: #D4EDDA;
+            opacity: 0.2;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        /* Complex shape animations */
+        .shape-float-1 {
+            top: 20%;
+            left: 15%;
+            animation: complexFloat1 20s ease-in-out infinite;
+        }
+
+        .shape-float-2 {
+            top: 40%;
+            right: 20%;
+            animation: complexFloat2 25s ease-in-out infinite;
+        }
+
+        .shape-float-3 {
+            top: 60%;
+            left: 25%;
+            animation: complexFloat3 22s ease-in-out infinite;
+        }
+
+        .shape-float-4 {
+            top: 35%;
+            right: 35%;
+            animation: complexFloat4 28s ease-in-out infinite;
+        }
+
+        .shape-float-5 {
+            top: 75%;
+            left: 40%;
+            animation: complexFloat1 24s ease-in-out infinite reverse;
+        }
+
+        .shape-float-6 {
+            top: 25%;
+            left: 60%;
+            animation: complexFloat2 26s ease-in-out infinite reverse;
+        }
+
+        .shape-float-7 {
+            top: 55%;
+            right: 15%;
+            animation: complexFloat3 23s ease-in-out infinite;
+        }
+
+        .shape-float-8 {
+            top: 80%;
+            right: 40%;
+            animation: complexFloat4 27s ease-in-out infinite reverse;
+        }
+
+        @keyframes complexFloat1 {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(80px, -60px) rotate(90deg) scale(1.2);
+            }
+            50% {
+                transform: translate(120px, 40px) rotate(180deg) scale(0.8);
+            }
+            75% {
+                transform: translate(40px, 80px) rotate(270deg) scale(1.1);
+            }
+        }
+
+        @keyframes complexFloat2 {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translate(-70px, 90px) rotate(120deg) scale(1.3);
+            }
+            66% {
+                transform: translate(-110px, -50px) rotate(240deg) scale(0.9);
+            }
+        }
+
+        @keyframes complexFloat3 {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            20% {
+                transform: translate(60px, 70px) rotate(72deg) scale(1.15);
+            }
+            40% {
+                transform: translate(100px, -40px) rotate(144deg) scale(0.85);
+            }
+            60% {
+                transform: translate(-50px, -80px) rotate(216deg) scale(1.25);
+            }
+            80% {
+                transform: translate(-90px, 30px) rotate(288deg) scale(0.95);
+            }
+        }
+
+        @keyframes complexFloat4 {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(-85px, -70px) rotate(-90deg) scale(1.2);
+            }
+            50% {
+                transform: translate(95px, -100px) rotate(-180deg) scale(0.8);
+            }
+            75% {
+                transform: translate(50px, 60px) rotate(-270deg) scale(1.1);
+            }
+        }
+
+        /* Orbiting Particles with Pastel Trails */
+        .orbit-system {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            pointer-events: none;
+        }
+
+        .orbit-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #FFB4D6, #C4A1FF);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.3;
+            box-shadow: 0 0 30px #FFB4D6;
+        }
+
+        .orbit-particle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform-origin: 0 0;
+            opacity: 0.4;
+        }
+
+        .orbit-1 {
+            top: 25%;
+            right: 15%;
+            animation: orbitRotate1 30s linear infinite;
+        }
+
+        .orbit-2 {
+            bottom: 20%;
+            left: 20%;
+            animation: orbitRotate2 35s linear infinite reverse;
+        }
+
+        .orbit-1 .orbit-particle:nth-child(2) {
+            background: #A8E6CF;
+            animation: orbit1 15s linear infinite;
+            box-shadow: 0 0 15px #A8E6CF, 0 0 30px #A8E6CF;
+        }
+
+        .orbit-1 .orbit-particle:nth-child(3) {
+            background: #FFD4B4;
+            animation: orbit2 18s linear infinite;
+            box-shadow: 0 0 15px #FFD4B4, 0 0 30px #FFD4B4;
+        }
+
+        .orbit-1 .orbit-particle:nth-child(4) {
+            background: #D4E5FF;
+            animation: orbit3 21s linear infinite;
+            box-shadow: 0 0 15px #D4E5FF, 0 0 30px #D4E5FF;
+        }
+
+        .orbit-2 .orbit-particle:nth-child(2) {
+            background: #FFE5D4;
+            animation: orbit1 16s linear infinite reverse;
+            box-shadow: 0 0 15px #FFE5D4, 0 0 30px #FFE5D4;
+        }
+
+        .orbit-2 .orbit-particle:nth-child(3) {
+            background: #E5D4FF;
+            animation: orbit2 19s linear infinite reverse;
+            box-shadow: 0 0 15px #E5D4FF, 0 0 30px #E5D4FF;
+        }
+
+        .orbit-2 .orbit-particle:nth-child(4) {
+            background: #D4FFE8;
+            animation: orbit3 22s linear infinite reverse;
+            box-shadow: 0 0 15px #D4FFE8, 0 0 30px #D4FFE8;
+        }
+
+        @keyframes orbitRotate1 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes orbitRotate2 {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes orbit1 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+
+        @keyframes orbit2 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+
+        @keyframes orbit3 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(150px) rotate(-360deg); }
+        }
+
         .snake-segment {
             position: absolute;
             width: 20px;
@@ -581,6 +1227,11 @@
             gap: 50px;
             padding: 0 40px 100px;
             perspective: 1000px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(245, 245, 240, 0.5) 0%, rgba(235, 235, 230, 0.8) 50%, rgba(245, 245, 240, 0.5) 100%);
+            background-image:
+                linear-gradient(180deg, rgba(245, 245, 240, 0.5) 0%, rgba(235, 235, 230, 0.8) 50%, rgba(245, 245, 240, 0.5) 100%),
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0, 0, 0, 0.02) 35px, rgba(0, 0, 0, 0.02) 70px);
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -1164,6 +1815,72 @@
     </style>
 </head>
 <body>
+    <!-- Ultra Complex Background System with Pastel Colors -->
+    <div class="floating-shapes-container">
+        <!-- Animated Wave Layers -->
+        <div class="wave-layer wave-1"></div>
+        <div class="wave-layer wave-2"></div>
+        <div class="wave-layer wave-3"></div>
+
+        <!-- Rotating Geometric Mandalas -->
+        <div class="mandala mandala-1">
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+        </div>
+        <div class="mandala mandala-2">
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+        </div>
+        <div class="mandala mandala-3">
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+        </div>
+
+        <!-- Complex Floating Geometric Shapes -->
+        <div class="complex-shape shape-float-1">
+            <div class="hex-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-2">
+            <div class="star-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-3">
+            <div class="pentagon-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-4">
+            <div class="hex-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-5">
+            <div class="star-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-6">
+            <div class="pentagon-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-7">
+            <div class="hex-shape"></div>
+        </div>
+        <div class="complex-shape shape-float-8">
+            <div class="star-shape"></div>
+        </div>
+
+        <!-- Orbiting Particle Systems -->
+        <div class="orbit-system orbit-1">
+            <div class="orbit-center"></div>
+            <div class="orbit-particle"></div>
+            <div class="orbit-particle"></div>
+            <div class="orbit-particle"></div>
+        </div>
+        <div class="orbit-system orbit-2">
+            <div class="orbit-center"></div>
+            <div class="orbit-particle"></div>
+            <div class="orbit-particle"></div>
+            <div class="orbit-particle"></div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="heroSection">
         <h1 class="hero-title">Callahan D. Carvalho</h1>
@@ -1208,19 +1925,36 @@
 
     <!-- Work Introduction -->
     <section class="work-intro">
+        <!-- Animated Background Elements -->
+        <div class="swoosh swoosh-1"></div>
+        <div class="swoosh swoosh-2"></div>
+        <div class="swoosh swoosh-3"></div>
+        <div class="swoosh swoosh-4"></div>
+
+        <div class="shooting-star star-1"></div>
+        <div class="shooting-star star-2"></div>
+        <div class="shooting-star star-3"></div>
+        <div class="shooting-star star-4"></div>
+        <div class="shooting-star star-5"></div>
+        <div class="shooting-star star-6"></div>
+        <div class="shooting-star star-7"></div>
+        <div class="shooting-star star-8"></div>
+        <div class="shooting-star star-9"></div>
+        <div class="shooting-star star-10"></div>
+
         <div class="work-intro-content">
             <h2>My Work</h2>
             <p>A collection of digital games and tabletop prototypes built from the ground up with emergent gameplay in mind.</p>
         </div>
     </section>
 
-    <!-- Digital Games Section -->
+    <!-- Games Section -->
     <section class="section-header">
-        <h2>Digital Games</h2>
+        <h2>Games</h2>
         <div class="section-divider"></div>
     </section>
 
-    <div class="games-grid" id="digitalGamesGrid">
+    <div class="games-grid" id="gamesGrid">
         <!-- Cards will be generated by JavaScript -->
     </div>
 
@@ -1230,7 +1964,17 @@
         <div class="section-divider"></div>
     </section>
 
-    <div class="games-grid" id="prototypesGrid">
+    <div class="games-grid" id="tabletopPrototypesGrid">
+        <!-- Cards will be generated by JavaScript -->
+    </div>
+
+    <!-- Digital Prototypes Section -->
+    <section class="section-header">
+        <h2>Digital Prototypes</h2>
+        <div class="section-divider"></div>
+    </section>
+
+    <div class="games-grid" id="digitalPrototypesGrid">
         <!-- Cards will be generated by JavaScript -->
     </div>
 
@@ -1261,15 +2005,15 @@
 
     <script>
         // Game Data
-        const games = {
-            digital: [
+        const projectData = {
+            games: [
                 {
                     id: 'bardo',
                     title: 'Bardo',
                     subtitle: '2D Platformer',
                     status: 'In Development',
                     date: 'March 2025 - Present',
-                    coverImage: 'assets/Digital/bardo/game art 1.jpg',
+                    coverImage: 'assets/Games/bardo/game art 1.jpg',
                     description: 'A 2D side-scrolling platformer where death means more than just failure. As Hudson, a middle-aged journalist in the 1970s, you traverse around a mystifying and ever-shifting tower in search of your son and elderly father. Dying in a room allows the player to respawn in a randomly selected new room, with reduced humanity. When Hudson loses all of his humanity, he submits to the tower and the run is lost!<br><br><strong>Death turns into strategy and loss becomes the way forward.</strong>',
                     workDone: [
                         'Built a Finite State Machine for player movement and animation states',
@@ -1283,7 +2027,24 @@
                         'Adding main menu'
                     ],
                     devNotes: 'With death as a mode of progress, every trap and obstacle had to be reimagined. I had to be careful not to break the game; if everything that hurts the player also guarantees forward progress, the player would need to be challenged in some other manner. The solution for this is the "Humanity Meter" - a form of corruption that fills up with every death. A good reminder to the player that death is not a free pass, but a calculated decision (or maybe a limited room error XD).',
-                    gallery: ['assets/Digital/bardo/1.png', 'assets/Digital/bardo/2.png', 'assets/Digital/bardo/3.png', 'assets/Digital/bardo/game art 2.jpg']
+                    gallery: ['assets/Games/bardo/1.png', 'assets/Games/bardo/2.png', 'assets/Games/bardo/3.png', 'assets/Games/bardo/game art 2.jpg']
+                },
+                {
+                    id: 'chopstyx',
+                    title: 'ChopstyX',
+                    subtitle: 'Turn-Based RPG',
+                    status: 'Completed',
+                    date: 'January 2026',
+                    coverImage: 'assets/Games/chopstyx/cover.png',
+                    description: 'ChopstyX is a turn-based RPG that reimagines the classic hand game Chopsticks as a mythological duel against Charon, the Ferryman of the Underworld. You play as a damned soul crossing the River Styx when Charon, bored with the endless ferrying of the dead, proposes a game. Defeat him in an intentionally unfair match, and you may earn your freedom.<br><br>Unbeknownst to Charon, you carry the Rings of the Gods—powerful artifacts capable of disturbing the waters of the Styx and bending the rules of the game in your favor.',
+                    workDone: [
+                        'Developed during USC Global Game Jam 2026 (48-hour challenge) with a three-person team',
+                        'Served as Producer and Programmer, leading team coordination, scope management, and task allocation',
+                        'Programmed core gameplay systems adapting Chopsticks rules for turn-based RPG combat',
+                        'Received <b>Best Technical Design</b> Award for strong collaboration and technical execution'
+                    ],
+                    devNotes: 'Within the limited 48-hour timeframe, we successfully scoped, designed, and built a complete playable experience. The challenge was balancing the classic Chopsticks mechanics with RPG elements while maintaining the mythological narrative.',
+                    gallery: ['assets/Games/chopstyx/1.png', 'assets/Games/chopstyx/2.png', 'assets/Games/chopstyx/3.png', 'assets/Games/chopstyx/4.png']
                 },
                 {
                     id: 'tower-defense',
@@ -1291,14 +2052,14 @@
                     subtitle: 'Strategy Game',
                     status: 'Completed',
                     date: 'December 2024',
-                    coverImage: 'assets/Digital/tower defense/cover.png',
+                    coverImage: 'assets/Games/tower defense/cover.png',
                     description: 'This strategy game allows the player to take the role of defense general of a castle. The general is allotted a certain amount of gold and must use this resource wisely to purchase and strategically deploy cannon towers that automatically fire at enemy barbarians charging at the castle base. Taking out all the enemies without sustaining any damage to the castle while also balancing your gold bank balance earns you a flawless 3 star reward!',
                     workDone: [
                         'Built core systems: resource management, pathfinding, tower placement, and automated turret AI with target prioritization',
                         'Balanced economy (costs, health, damage) and designed 3-star rating system rewarding strategic optimization'
                     ],
                     devNotes: 'This project introduced me to a whole new collection of programming tricks and engine tools used in almost every popular game. Some of these common tricks include scene swapping, path following nodes, automated targeting and firing, etc.',
-                    gallery: ['assets/Digital/tower defense/1.png', 'assets/Digital/tower defense/2star_victory.png', 'assets/Digital/tower defense/bts.png']
+                    gallery: ['assets/Games/tower defense/1.png', 'assets/Games/tower defense/2star_victory.png', 'assets/Games/tower defense/bts.png']
                 },
                 {
                     id: 'rocket-boost',
@@ -1306,14 +2067,14 @@
                     subtitle: '3D Physics Platformer',
                     status: 'Completed',
                     date: 'December 2024',
-                    coverImage: 'assets/Digital/project boost/cover.png',
+                    coverImage: 'assets/Games/project boost/cover.png',
                     description: 'This 3D game takes the simple game loop of the popular \'flappy bird\' and expands on it to a 3 Dimensional layout while adding a little more complexity and nuance. The goal is for the player to fly, steer and land a rocket ship on the designated landing pad, while avoiding obstacles and moving debris in space.',
                     workDone: [
                         'Developed 5 levels with escalating difficulty using physics-based controls for thrust and rotation',
                         'Designed obstacles (moving platforms, debris) and scene management emphasizing spatial awareness'
                     ],
                     devNotes: 'This game has multiple levels, linked together with different scenes in the game tree. This allowed me to design five individually unique and stimulating levels.',
-                    gallery: ['assets/Digital/project boost/level.png', 'assets/Digital/project boost/crash.png', 'assets/Digital/project boost/success.png']
+                    gallery: ['assets/Games/project boost/level.png', 'assets/Games/project boost/crash.png', 'assets/Games/project boost/success.png']
                 },
                 {
                     id: 'firing-knight',
@@ -1321,81 +2082,170 @@
                     subtitle: '2D Pixel Platformer',
                     status: 'Completed',
                     date: 'June 2024',
-                    coverImage: 'assets/Digital/firing knight/cover.png',
+                    coverImage: 'assets/Games/firing knight/cover.png',
                     description: 'My first ever game developed from scratch was a 2D pixel platformer that sees the player control a knight and traverse an unfamiliar land with moving platforms and horrific slime monsters while he collects coins and makes his way to the top. This project allowed me to understand the fundamentals of game design such as level design, using tilemaps, character and object animations and writing scripts for player movement and interaction as well enemy behavior.',
                     workDone: [
                         'Designed gameplay combining platforming with ranged combat; implemented AI with patrol patterns and detection',
                         'Created level design using tilemaps and collectibles to encourage exploration and reward skilled play'
                     ],
-                    gallery: ['assets/Digital/firing knight/2dgame.png', 'assets/Digital/firing knight/2dgamedev2.png', 'assets/Digital/firing knight/2dgamedev3.png', 'assets/Digital/firing knight/2dgame_bts.png']
+                    gallery: ['assets/Games/firing knight/2dgame.png', 'assets/Games/firing knight/2dgamedev2.png', 'assets/Games/firing knight/2dgamedev3.png', 'assets/Games/firing knight/2dgame_bts.png']
                 }
             ],
-            prototypes: [
-                {
-                    id: 'madjack',
-                    title: 'MadJack',
-                    subtitle: 'Card Game',
-                    status: 'In Development',
-                    date: null,
-                    coverImage: 'assets/Prototypes/MadJack/1.webp',
-                    description: 'A twist on blackjack with powerups and special cards and meta progression that carries forward for a total of 5 rounds. Face cards no longer have the value but instead can be saved up and used as a rescue move of sorts.',
-                    gallery: []
-                },
-                {
-                    id: 'voidrunners',
-                    title: 'Voidrunners',
-                    subtitle: 'Co-op Board Game',
-                    status: 'Completed',
-                    date: null,
-                    coverImage: 'assets/Prototypes/Voidrunners/cover.jpg',
-                    description: '4-player co-op space adventure about escaping the pull of a black hole and getting back to the mothership. The players start near the blackhole and have to make it all the way back to their ship. Players must use their limited fuel and gamble on the gravitational pull of nearby celestial bodies for movement. All four players work as a team to bump each other and share fuel.',
-                    gallery: ['assets/Prototypes/Voidrunners/2.jpg', 'assets/Prototypes/Voidrunners/3.jpg', 'assets/Prototypes/Voidrunners/1.jpg']
-                },
-                {
-                    id: 'toy-box-brawl',
-                    title: 'Toy Box Brawl',
-                    subtitle: 'Territory Control Game',
-                    status: 'Completed',
-                    date: null,
-                    coverImage: 'assets/Prototypes/Toy Box Brawl/cover.png',
-                    description: '1v1 territory control game using toy cards (with action points and power) to gain the most Victory Points. Victory Points are gained by occupying a tile at the start of your turn. Tiles closer to the opposite\'s home base have higher victory points.',
-                    gallery: ['assets/Prototypes/Toy Box Brawl/1.jpg', 'assets/Prototypes/Toy Box Brawl/2.jpg', 'assets/Prototypes/Toy Box Brawl/3.jpg']
-                },
-                {
-                    id: 'quit-lion',
-                    title: 'Quit Lion!',
-                    subtitle: 'Bluffing Race Game',
-                    status: 'Completed',
-                    date: null,
-                    coverImage: 'assets/Prototypes/Quit Lion!/cover.png',
-                    description: 'Multilateral bluffing game that uses bluffing for movement to race to the finish line. A fresh twist on the classic game of Bluff that sees players bluff their movement.',
-                    gallery: ['assets/Prototypes/Quit Lion!/gameplay.jpg', 'assets/Prototypes/Quit Lion!/player pieces.jpg', 'assets/Prototypes/Quit Lion!/punishment cards.jpg', 'assets/Prototypes/Quit Lion!/board.jpg']
-                }
-            ]
+            prototypes: {
+                tabletop: [
+                    {
+                        id: 'madjack',
+                        title: 'MadJack',
+                        subtitle: 'Card Game',
+                        status: 'In Development',
+                        date: null,
+                        coverImage: 'assets/Prototypes/tabletop/MadJack/1.webp',
+                        description: 'A twist on blackjack with powerups and special cards and meta progression that carries forward for a total of 5 rounds. Face cards no longer have the value but instead can be saved up and used as a rescue move of sorts.',
+                        gallery: []
+                    },
+                    {
+                        id: 'voidrunners',
+                        title: 'Voidrunners',
+                        subtitle: 'Co-op Board Game',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/tabletop/Voidrunners/cover.jpg',
+                        description: 'Voidrunners is a 4-player cooperative space adventure where players must work together to retrieve stranded gears and escape before a growing black hole consumes them. Stranded with limited fuel, players navigate a circular space board, making high-stakes movement decisions as the environment actively works against them.<br><br>Each player begins with a shared sense of urgency: fuel is capped at 10, and every move matters. While careful planning can help, fuel alone is often insufficient—forcing players to gamble on risky slingshot maneuvers around stars or rely on each other for survival.',
+                        designGoal: 'Evoke two key emotions: <strong>Dread and anxiety</strong>, as the black hole inexorably pulls players inward each turn, and <strong>Cooperation and trust</strong>, as players must support one another to successfully retrieve gears and return to the ship. The experience emphasizes shared responsibility, where individual mistakes—or acts of generosity—can impact the entire team.',
+                        coreMechanics: [
+                            '<strong>Risk-Reward Stars:</strong> Slingshotting around stars offers powerful movement boosts but introduces uncertainty, encouraging players to take calculated risks instead of always choosing the safest path',
+                            '<strong>Encroaching Black Hole:</strong> The central black hole pulls all players one space inward every turn, creating constant time pressure and reinforcing the feeling of impending doom',
+                            '<strong>Player Boosting:</strong> Players can collide with and push one another in any direction, granting the boosted player free movement. This mechanic directly incentivizes cooperation and enables clutch, selfless plays'
+                        ],
+                        devNotes: 'Every core mechanic in Voidrunners reinforces its emotional goals—scarcity drives tension, environmental pressure fuels urgency, and player interaction transforms survival into a shared effort rather than a solo puzzle.',
+                        gallery: ['assets/Prototypes/tabletop/Voidrunners/2.jpg', 'assets/Prototypes/tabletop/Voidrunners/3.jpg', 'assets/Prototypes/tabletop/Voidrunners/1.jpg']
+                    },
+                    {
+                        id: 'toy-box-brawl',
+                        title: 'Toy Box Brawl',
+                        subtitle: 'Territory Control Game',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/tabletop/Toy Box Brawl/cover.png',
+                        description: 'Toy Box Brawl is a 1v1, turn-based territory control game where players deploy toy units to dominate the battlefield and score Victory Points. Using a streamlined card-driven system, players must balance positioning, resource management, and tactical combat to outmaneuver their opponent.<br><br>Victory Points are earned by occupying tiles at the start of your turn, with tiles increasing in value the closer they are to the opponent\'s home base. This creates constant forward pressure and rewards calculated aggression.',
+                        coreMechanics: [
+                            '<strong>Distance-Based Scoring:</strong> Victory Point values scale with proximity to the opponent\'s home base, naturally incentivizing players to push forward and contest enemy territory rather than play defensively',
+                            '<strong>Spatial Contention:</strong> Energy tiles act as high-value choke points, encouraging repeated conflict and meaningful positioning decisions',
+                            '<strong>Minimal Resource Design:</strong> The game uses only two resources—Action Points (used to move pawns and deploy new units) and Power (used exclusively to resolve combat). By limiting the resource economy to two clearly defined systems, Toy Box Brawl emphasizes clarity, tension, and tactical depth without unnecessary complexity'
+                        ],
+                        devNotes: 'The design prioritizes constant interaction and territory pressure. Every turn presents a tradeoff between expanding control, reinforcing your position, or preparing for conflict—keeping both players engaged throughout the match.',
+                        gallery: ['assets/Prototypes/tabletop/Toy Box Brawl/1.jpg', 'assets/Prototypes/tabletop/Toy Box Brawl/2.jpg', 'assets/Prototypes/tabletop/Toy Box Brawl/3.jpg']
+                    },
+                    {
+                        id: 'quit-lion',
+                        title: 'Quit Lion!',
+                        subtitle: 'Bluffing Race Game',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/tabletop/Quit Lion!/cover.png',
+                        description: 'Quit Lion! is a 4-player competitive bluffing board game about shameless line-cutting at a watering hole. Players take on the roles of notorious animals jockeying for position in a queue, using excuses, deception, and social pressure to sneak their way forward. Through bluffing and calling out lies, players race to be the first to reach the watering hole—preferably at the expense of their friends.',
+                        designGoal: 'Make players feel conniving, deceptive, and socially mischievous. We wanted bluffing to feel personal and playful rather than purely mechanical, encouraging table talk and reading opponents. As a result, the game was intentionally designed to shine when played with close friends and family, where trust, history, and banter heighten the experience.',
+                        workDone: [
+                            '<strong>Development Process:</strong> Developed over a 4-week period using a highly iterative, player-centric design process. Conducted 15+ playtests and created 5 fully playable iterations',
+                            '<strong>Iteration Focus:</strong> Mechanics were frequently reworked to ensure they supported our core experience goals rather than existing for complexity\'s sake. Each iteration focused on refining how bluffing, movement, and player interaction intersected at the table'
+                        ],
+                        devNotes: 'One major insight was that tying bluffing directly to movement created unintended player incentives. Players were naturally reluctant to bluff high-value movement cards, as the risk of being caught outweighed the reward, while lower-value cards were more often used deceptively. This led to less dramatic bluffing moments than anticipated and revealed the importance of aligning risk-reward structures with desired player behavior.',
+                        gallery: ['assets/Prototypes/tabletop/Quit Lion!/gameplay.jpg', 'assets/Prototypes/tabletop/Quit Lion!/player pieces.jpg', 'assets/Prototypes/tabletop/Quit Lion!/punishment cards.jpg', 'assets/Prototypes/tabletop/Quit Lion!/board.jpg']
+                    }
+                ],
+                digital: [
+                    {
+                        id: 'disc-runner',
+                        title: 'Disc Runner',
+                        subtitle: 'High-Precision Platformer',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/digital/disc runner/1.png',
+                        description: 'A high-precision platformer built around a singular, versatile mechanic: a kinetic disc that serves as both a projectile and a portable platform. The game focuses on a 50/50 split between environmental puzzle-solving (finding the path) and mechanical execution (executing the path).<br><br>The player\'s primary tool is a boomerang disc that interacts with both the environment and the player\'s movement state.',
+                        coreMechanics: [
+                            '<strong>The Disc Jump:</strong> Players can throw the disc along the horizontal or vertical axis. Jumping off a horizontal disc acts as a standard platform boost, while jumping off a vertical disc allows for mid-air wall jumps',
+                            '<strong>The Boomerang Effect:</strong> The disc naturally returns to the player. Mastering the timing of its return is essential for chaining movements',
+                            '<strong>Ricochet Physics:</strong> The disc bounces off solid surfaces. This allows players to "set up" platforms in hard-to-reach areas by banking shots off walls',
+                            '<strong>Momentum Dash:</strong> Upon catching the disc, the player gains a brief dash window. This creates a rhythmic "Throw → Jump → Catch → Dash" loop that rewards precision timing'
+                        ],
+                        workDone: [
+                            '<strong>Design Philosophy:</strong> Levels are designed as "movement puzzles" with two distinct challenges—the logical challenge (visualizing the sequence of throws and bounces) and the execution challenge (frame-perfect inputs)',
+                            '<strong>Dynamic Room-to-Room Camera System:</strong> Developed a custom camera controller with framing logic that automatically adjusts zoom levels and offsets to ensure rooms of any dimension are perfectly centered',
+                            '<strong>Seamless Transitions:</strong> Using viewport-boundary detection, camera helper functions predict the player\'s intended destination and transition smoothly without breaking momentum',
+                            '<strong>Optimization:</strong> Camera logic intelligently culls off-screen assets, ensuring high performance even in complex levels'
+                        ],
+                        devNotes: '<strong>Key Takeaways:</strong> Refined the "snap-to" logic of the disc jump to ensure it felt responsive rather than frustrating. Discovered that the ricochet mechanic allowed for speedrunning skips I hadn\'t originally intended, which I then leaned into during level design.',
+                        gallery: ['assets/Prototypes/digital/disc runner/1.png', 'assets/Prototypes/digital/disc runner/2.png', 'assets/Prototypes/digital/disc runner/3.png', 'assets/Prototypes/digital/disc runner/4.png']
+                    },
+                    {
+                        id: 'pong-o',
+                        title: 'Pong-O',
+                        subtitle: 'Competitive Arcade Game',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/digital/pong-o/1.png',
+                        description: 'A competitive PvP reinterpretation of Pong set within a circular arena. Players score points each time their shot crosses the opponent\'s half-line, with victory going to the first player to reach 3,000 points. The circular play space transforms traditional positioning and angles, creating constant motion and dynamic rallies.',
+                        designGoal: 'Capture the nostalgic immediacy of classic arcade games like Pong while introducing modern mechanics that deepen competition and player expression.',
+                        workDone: [
+                            '<strong>Rally System:</strong> Features a rally multiplier system that rewards evenly matched players and sustained skillful play. As long as a rally continues, both players gain a temporary score multiplier that steadily increases',
+                            '<strong>High-Risk Decision Making:</strong> Breaking the rally comes at a cost—the player responsible is penalized 50 × the current rally multiplier, reinforcing high-risk, high-reward gameplay',
+                            '<strong>Shrink System:</strong> Dynamically reduces the players\' paddle size over time but increases their base multiplier, naturally increasing difficulty while incentivizing higher score potential',
+                            '<strong>Accessibility Options:</strong> For players seeking a more relaxed experience, the Shrink system can be disabled prior to the start of a match'
+                        ],
+                        devNotes: 'The circular arena completely transforms the traditional Pong formula, requiring players to constantly adapt their positioning and angles. The combination of rally multipliers and shrinking paddles creates escalating tension throughout each match.',
+                        gallery: ['assets/Prototypes/digital/pong-o/1.png', 'assets/Prototypes/digital/pong-o/2.png', 'assets/Prototypes/digital/pong-o/3.png']
+                    },
+                    {
+                        id: 'snake-catcher',
+                        title: 'Snake Catcher',
+                        subtitle: 'Idle Progression Game',
+                        status: 'Completed',
+                        date: null,
+                        coverImage: 'assets/Prototypes/digital/snake catcher/1.png',
+                        description: 'A minimalist idle game centered around catching snakes. Players can actively pursue snakes or passively wait for them to wander into range—either way, every successful catch rewards coins. These coins can be reinvested to expand the catch radius, unlock new snake varieties, and increase the total number of snakes on screen, creating a self-reinforcing progression loop of growth and reward.<br><br><strong>Prototype Goal:</strong> The primary goal of this prototype was to explore game design without a fail state. By removing loss conditions entirely, the experience is intended to feel soothing and low-pressure. While this version is a prototype, the long-term vision emphasizes a calming gameplay loop paired with visually pleasing motion and presentation.',
+                        workDone: [
+                            '<strong>Procedural Snake Movement (Inverse Kinematics):</strong> Each snake\'s movement is driven by Inverse Kinematics rather than pre-authored animations. Individual joints respond dynamically to the position of the previous joint based on a defined rule set, allowing for fluid, organic motion without requiring hundreds of baked animations',
+                            '<strong>Memory-Efficient Snake Respawning:</strong> When a snake despawns, two snakes are generated in its place. One of these is the original snake, repositioned outside the viewport and recolored, rather than fully destroyed and recreated. This reuse of objects reduces memory overhead and improves runtime performance, enabling higher snake counts without additional cost'
+                        ],
+                        devNotes: 'This prototype explores what happens when you remove traditional game pressure entirely. The result is a meditative experience where progression feels rewarding without the anxiety of failure states.',
+                        gallery: ['assets/Prototypes/digital/snake catcher/1.png', 'assets/Prototypes/digital/snake catcher/2.png', 'assets/Prototypes/digital/snake catcher/3.png']
+                    }
+                ]
+            }
         };
 
         // Generate Game Cards
         function generateGameCards() {
-            const digitalGrid = document.getElementById('digitalGamesGrid');
-            const prototypesGrid = document.getElementById('prototypesGrid');
+            const gamesGrid = document.getElementById('gamesGrid');
+            const tabletopPrototypesGrid = document.getElementById('tabletopPrototypesGrid');
+            const digitalPrototypesGrid = document.getElementById('digitalPrototypesGrid');
 
-            // Digital games
-            games.digital.forEach(game => {
-                const card = createGameCard(game, false);
-                digitalGrid.appendChild(card);
+            // Games
+            projectData.games.forEach(game => {
+                const card = createGameCard(game, 'game');
+                gamesGrid.appendChild(card);
             });
 
-            // Prototypes
-            games.prototypes.forEach(game => {
-                const card = createGameCard(game, true);
-                prototypesGrid.appendChild(card);
+            // Tabletop Prototypes
+            projectData.prototypes.tabletop.forEach(game => {
+                const card = createGameCard(game, 'tabletop');
+                tabletopPrototypesGrid.appendChild(card);
+            });
+
+            // Digital Prototypes
+            projectData.prototypes.digital.forEach(game => {
+                // Skip games without cover images
+                if (!game.coverImage) return;
+                const card = createGameCard(game, 'digital-prototype');
+                digitalPrototypesGrid.appendChild(card);
             });
         }
 
-        function createGameCard(game, isPrototype) {
+        function createGameCard(game, category) {
             const card = document.createElement('div');
+            const isPrototype = category === 'tabletop' || category === 'digital-prototype';
             card.className = `game-card${isPrototype ? ' prototype' : ''}`;
-            card.onclick = () => openGameModal(game, isPrototype);
+            card.onclick = () => openGameModal(game, category);
 
             const img = document.createElement('img');
             img.className = 'game-card-image';
@@ -1452,7 +2302,7 @@
         let currentGameGallery = [];
 
         // Modal Functions
-        function openGameModal(game, isPrototype = false) {
+        function openGameModal(game, category = 'game') {
             const modal = document.getElementById('gameModal');
             const modalBody = document.getElementById('modalBody');
             const modalLabel = document.querySelector('.modal-header span');
@@ -1461,7 +2311,12 @@
             modal.classList.remove('closing');
 
             // Update header label
-            modalLabel.textContent = isPrototype ? 'PROTOTYPE' : 'DIGITAL';
+            const labels = {
+                'game': 'GAME',
+                'tabletop': 'TABLETOP PROTOTYPE',
+                'digital-prototype': 'DIGITAL PROTOTYPE'
+            };
+            modalLabel.textContent = labels[category] || 'GAME';
 
             // Store gallery for carousel
             currentGameGallery = game.gallery || [];
@@ -1478,6 +2333,26 @@
                     </div>
                 </div>
             `;
+
+            if (game.designGoal) {
+                content += `
+                    <div class="modal-section">
+                        <h3>Design Goal</h3>
+                        <p>${game.designGoal}</p>
+                    </div>
+                `;
+            }
+
+            if (game.coreMechanics) {
+                content += `
+                    <div class="modal-section">
+                        <h3>Core Gameplay Mechanics</h3>
+                        <ul>
+                            ${game.coreMechanics.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
 
             if (game.workDone) {
                 content += `
@@ -1799,9 +2674,10 @@
             snakes: [],
             snakeInterval: null,
             isActive: false,
-            MAX_BODY_SIZE: 10,
+            FIXED_SNAKE_LENGTH: 6,
+            MAX_SNAKES: 80,
             nextSnakeId: 0,
-            colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'],
+            colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#FF85A2', '#7FDBFF', '#2ECC40', '#FFDC00', '#F012BE', '#01FF70', '#FF851B', '#B10DC9'],
             mouseGridPos: { x: 0, y: 0 },
             heroRect: null,
 
@@ -1830,28 +2706,31 @@
                     this.stopGame();
                 });
 
-                // Click to grow all snakes
+                // Click to change all snake colors
                 hero.addEventListener('click', (e) => {
-                    // Don't grow if clicking scroll button or arrow icon
+                    // Don't change colors if clicking scroll button or arrow icon
                     if (e.target.classList.contains('scroll-button') ||
                         e.target.classList.contains('arrow-icon') ||
                         e.target.closest('.scroll-button')) return;
-                    this.growAllSnakes();
+                    this.changeAllSnakeColors();
                 });
             },
 
-            growAllSnakes() {
+            changeAllSnakeColors() {
                 if (!this.isActive) return;
 
                 this.snakes.forEach(snake => {
-                    if (snake.segments.length >= this.MAX_BODY_SIZE) return;
+                    // Get a random color different from the current one
+                    let newColor;
+                    do {
+                        newColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    } while (newColor === snake.color && this.colors.length > 1);
 
-                    // Add new segment at the tail position
-                    const tail = snake.segments[snake.segments.length - 1];
-                    snake.segments.push({ x: tail.x, y: tail.y, isNew: true });
+                    snake.color = newColor;
 
-                    // Create ripple effect at spawn location
-                    this.createRipple(tail.x, tail.y);
+                    // Create ripple effect at head position for visual feedback
+                    const head = snake.segments[0];
+                    this.createRipple(head.x, head.y);
                 });
 
                 this.renderSnakes();
@@ -1872,7 +2751,10 @@
             startGame() {
                 if (this.isActive) return;
                 this.isActive = true;
+                // Start with 3 snakes for faster scaling
                 this.spawnSnake();
+                setTimeout(() => this.spawnSnake(), 100);
+                setTimeout(() => this.spawnSnake(), 200);
                 this.snakeInterval = setInterval(() => this.moveSnakes(), 200);
             },
 
@@ -1889,6 +2771,9 @@
             },
 
             spawnSnake() {
+                // Check if we've reached the maximum snake limit
+                if (this.snakes.length >= this.MAX_SNAKES) return;
+
                 const maxX = Math.floor(this.heroRect.width / this.gridSize);
                 const maxY = Math.floor(this.heroRect.height / this.gridSize);
 
@@ -1903,15 +2788,16 @@
                     case 3: startX = Math.floor(Math.random() * maxX); startY = maxY - 1; break;
                 }
 
-                // Create new snake object
+                // Create new snake object with fixed length
+                const segments = [];
+                for (let i = 0; i < this.FIXED_SNAKE_LENGTH; i++) {
+                    segments.push({ x: startX, y: startY });
+                }
+
                 const newSnake = {
                     id: this.nextSnakeId++,
                     color: this.colors[Math.floor(Math.random() * this.colors.length)],
-                    segments: [
-                        { x: startX, y: startY },
-                        { x: startX, y: startY },
-                        { x: startX, y: startY }
-                    ]
+                    segments: segments
                 };
 
                 this.snakes.push(newSnake);
@@ -1978,16 +2864,21 @@
                     snake.segments.pop();
                 });
 
-                // Remove caught snakes and spawn TWO new ones (replacement + additional)
+                // Remove caught snakes and spawn THREE new ones for faster scaling
                 snakesToRemove.forEach(snakeId => {
                     this.removeSnake(snakeId);
-                    // Spawn 2 new snakes with staggered timing
+                    // Spawn 3 new snakes with staggered timing
                     setTimeout(() => {
                         if (this.isActive) {
                             this.spawnSnake();
                             setTimeout(() => {
-                                if (this.isActive) this.spawnSnake();
-                            }, 150);
+                                if (this.isActive) {
+                                    this.spawnSnake();
+                                    setTimeout(() => {
+                                        if (this.isActive) this.spawnSnake();
+                                    }, 100);
+                                }
+                            }, 100);
                         }
                     }, 300);
                 });
@@ -2031,14 +2922,19 @@
             },
 
             onSnakeHovered(snakeId) {
-                // Same effect as when snake catches cursor
+                // Same effect as when snake catches cursor - spawn 3 for faster scaling
                 this.removeSnake(snakeId);
                 setTimeout(() => {
                     if (this.isActive) {
                         this.spawnSnake();
                         setTimeout(() => {
-                            if (this.isActive) this.spawnSnake();
-                        }, 150);
+                            if (this.isActive) {
+                                this.spawnSnake();
+                                setTimeout(() => {
+                                    if (this.isActive) this.spawnSnake();
+                                }, 100);
+                            }
+                        }, 100);
                     }
                 }, 300);
             },
@@ -2047,8 +2943,8 @@
                 const arrow = document.getElementById('scrollArrow');
                 if (!arrow) return;
 
-                // Show escape hint when 5 or more snakes are active
-                if (this.snakes.length >= 5) {
+                // Show escape hint when 20 or more snakes are active
+                if (this.snakes.length >= 20) {
                     arrow.classList.add('escape-hint');
                 } else {
                     arrow.classList.remove('escape-hint');

@@ -1,0 +1,12 @@
+Synopsis
+Chopstyx is a turn-based RPG that reimagines the classic hand game Chopsticks as a mythological duel against Charon, the Ferryman of the Underworld.
+You play as a damned soul crossing the River Styx when Charon, bored with the endless ferrying of the dead, proposes a game. Defeat him in an intentionally unfair match, and you may earn your freedom.
+
+Unbeknownst to Charon, you carry the Rings of the Gods—powerful artifacts capable of disturbing the waters of the Styx and bending the rules of the game in your favor.
+
+Development & Recognition
+Chopstyx was developed by a three-person team during the USC Global Game Jam 2026, a 48-hour game development challenge. Within this limited timeframe, we scoped, designed, and built a complete playable experience.
+Thanks to the team’s strong collaboration and technical execution, the project received the Best Technical Design Award.
+
+My Role
+I served as Producer and Programmer throughout the development sprint. My responsibilities included leading the team, coordinating meetings, managing scope and task allocation, streamlining production workflows, and programming core gameplay systems.
