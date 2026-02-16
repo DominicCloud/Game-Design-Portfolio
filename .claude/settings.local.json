@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git lfs:*)"
+      "Bash(git lfs:*)",
+      "Bash(gh release create:*)",
+      "Bash(where:*)"
     ]
   }
 }
