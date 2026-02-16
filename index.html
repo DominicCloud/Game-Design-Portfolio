@@ -198,6 +198,114 @@
             animation: snakePop 0.4s ease-out forwards !important;
         }
 
+        /* Shockwave Effects */
+        .shockwave-ring {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 200;
+            animation: shockwaveExpand 0.6s ease-out forwards;
+        }
+
+        @keyframes shockwaveExpand {
+            0% {
+                width: 0;
+                height: 0;
+                border-width: 4px;
+                opacity: 1;
+            }
+            100% {
+                width: 480px;
+                height: 480px;
+                border-width: 1px;
+                opacity: 0;
+            }
+        }
+
+        .shockwave-ring.chain-ring {
+            border-color: rgba(255, 200, 100, 0.8);
+            animation: shockwaveExpandChain 0.5s ease-out forwards;
+        }
+
+        @keyframes shockwaveExpandChain {
+            0% {
+                width: 0;
+                height: 0;
+                border-width: 3px;
+                opacity: 1;
+            }
+            100% {
+                width: 260px;
+                height: 260px;
+                border-width: 1px;
+                opacity: 0;
+            }
+        }
+
+        .shockwave-flash {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 200;
+            animation: shockwaveFlash 0.3s ease-out forwards;
+        }
+
+        @keyframes shockwaveFlash {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+            }
+        }
+
+        .shockwave-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 200;
+            animation: shockwaveParticle 0.5s ease-out forwards;
+        }
+
+        @keyframes shockwaveParticle {
+            0% {
+                transform: translate(-50%, -50%) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) translate(var(--dx), var(--dy));
+                opacity: 0;
+            }
+        }
+
+        .screen-shake {
+            animation: screenShake 0.3s ease-out;
+        }
+
+        @keyframes screenShake {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-4px, 2px); }
+            20% { transform: translate(4px, -2px); }
+            30% { transform: translate(-3px, -3px); }
+            40% { transform: translate(3px, 3px); }
+            50% { transform: translate(-2px, 1px); }
+            60% { transform: translate(2px, -1px); }
+            70% { transform: translate(-1px, 2px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
         .tile-fall {
             animation: tileFall 1s ease-in forwards !important;
         }
@@ -1043,7 +1151,6 @@
             perspective: 1000px;
             width: 320px;
             height: 320px;
-            cursor: pointer;
             transform: translateX(800px);
             opacity: 0;
             transition: transform 1s ease-out, opacity 1s ease-out;
@@ -1053,7 +1160,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.8s ease-out 0.5s;
+            transition: transform 0.8s ease-out 0.15s;
             transform-style: preserve-3d;
             transform: rotateY(180deg);
         }
@@ -1080,7 +1187,6 @@
             }
         }
 
-        .profile-card:hover .profile-card-inner,
         .about-section:has(.about-content:hover) .profile-card-inner {
             transform: rotateY(180deg);
             transition: transform 0.6s;
@@ -1105,6 +1211,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            cursor: pointer;
         }
 
         .profile-card-back {
@@ -1296,6 +1403,37 @@
 
         .status-completed {
             background: #C5E1FF;
+        }
+
+        .montage-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border: 3px solid #000;
+            font-size: 0.65em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            margin-left: 5px;
+            background: #E0F0E0;
+        }
+
+        .montage-badge-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+
+        .montage-badge-icon svg {
+            width: 8px;
+            height: 8px;
+            margin-left: 1px;
         }
 
         /* Modal */
@@ -1513,6 +1651,16 @@
             transform: translate(-2px, -2px);
         }
 
+        .modal-gallery-video {
+            grid-column: 1 / -1;
+        }
+
+        .modal-gallery-video video {
+            width: 100%;
+            border: 4px solid #000;
+            background: #000;
+        }
+
         /* Image Modal / Carousel */
         .image-modal {
             display: none;
@@ -1608,6 +1756,27 @@
 
         .image-modal-close:hover {
             background: #333;
+        }
+
+        .profile-overlay {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-overlay.active {
+            display: flex;
+        }
+
+        .profile-overlay.closing {
+            animation: fadeOut 0.2s ease-out forwards;
         }
 
         .carousel-counter {
@@ -1905,7 +2074,7 @@
             <div class="profile-card">
                 <div class="profile-card-inner">
                     <div class="profile-card-front">
-                        <img src="assets/about me.jpg" alt="Callahan Carvalho" class="profile-pic">
+                        <img src="assets/about me.jpg" alt="Callahan Carvalho" class="profile-pic" onclick="openProfileImage(event)">
                     </div>
                     <div class="profile-card-back">
                         <p class="profile-quote">"The process of creating something from nothing—pieces that represent the maker's originality and innovation—has always been deeply rewarding to me. This drive to create, combined with my love for design and natural inclination towards logical reasoning became the primary motivation that led me to pursue a career in Game Design."</p>
@@ -2003,7 +2172,29 @@
         <div class="carousel-counter" id="carouselCounter"></div>
     </div>
 
+    <!-- Profile Image Overlay -->
+    <div id="profileOverlay" class="profile-overlay" onclick="closeProfileImage()">
+        <span class="image-modal-close">✕</span>
+        <img src="assets/about me.jpg" alt="Callahan Carvalho" class="image-modal-content">
+    </div>
+
     <script>
+        // Profile Image Enlarge
+        function openProfileImage(event) {
+            event.stopPropagation();
+            const overlay = document.getElementById('profileOverlay');
+            overlay.classList.remove('closing');
+            overlay.classList.add('active');
+        }
+
+        function closeProfileImage() {
+            const overlay = document.getElementById('profileOverlay');
+            overlay.classList.add('closing');
+            setTimeout(() => {
+                overlay.classList.remove('active', 'closing');
+            }, 200);
+        }
+
         // Game Data
         const projectData = {
             games: [
@@ -2044,6 +2235,7 @@
                         'Received <b>Best Technical Design</b> Award for strong collaboration and technical execution'
                     ],
                     devNotes: 'Within the limited 48-hour timeframe, we successfully scoped, designed, and built a complete playable experience. The challenge was balancing the classic Chopsticks mechanics with RPG elements while maintaining the mythological narrative.',
+                    montage: 'assets/montages/chopstyx_montage.mp4',
                     gallery: ['assets/Games/chopstyx/1.png', 'assets/Games/chopstyx/2.png', 'assets/Games/chopstyx/3.png', 'assets/Games/chopstyx/4.png']
                 },
                 {
@@ -2074,6 +2266,7 @@
                         'Designed obstacles (moving platforms, debris) and scene management emphasizing spatial awareness'
                     ],
                     devNotes: 'This game has multiple levels, linked together with different scenes in the game tree. This allowed me to design five individually unique and stimulating levels.',
+                    montage: 'assets/montages/rocket_boost_montage.mp4',
                     gallery: ['assets/Games/project boost/level.png', 'assets/Games/project boost/crash.png', 'assets/Games/project boost/success.png']
                 },
                 {
@@ -2088,6 +2281,7 @@
                         'Designed gameplay combining platforming with ranged combat; implemented AI with patrol patterns and detection',
                         'Created level design using tilemaps and collectibles to encourage exploration and reward skilled play'
                     ],
+                    montage: 'assets/montages/firing_knight_montage.mp4',
                     gallery: ['assets/Games/firing knight/2dgame.png', 'assets/Games/firing knight/2dgamedev2.png', 'assets/Games/firing knight/2dgamedev3.png', 'assets/Games/firing knight/2dgame_bts.png']
                 }
             ],
@@ -2175,6 +2369,7 @@
                             '<strong>Optimization:</strong> Camera logic intelligently culls off-screen assets, ensuring high performance even in complex levels'
                         ],
                         devNotes: '<strong>Key Takeaways:</strong> Refined the "snap-to" logic of the disc jump to ensure it felt responsive rather than frustrating. Discovered that the ricochet mechanic allowed for speedrunning skips I hadn\'t originally intended, which I then leaned into during level design.',
+                        montage: 'assets/montages/disk_runner_montage.mp4',
                         gallery: ['assets/Prototypes/digital/disc runner/1.png', 'assets/Prototypes/digital/disc runner/2.png', 'assets/Prototypes/digital/disc runner/3.png', 'assets/Prototypes/digital/disc runner/4.png']
                     },
                     {
@@ -2193,6 +2388,7 @@
                             '<strong>Accessibility Options:</strong> For players seeking a more relaxed experience, the Shrink system can be disabled prior to the start of a match'
                         ],
                         devNotes: 'The circular arena completely transforms the traditional Pong formula, requiring players to constantly adapt their positioning and angles. The combination of rally multipliers and shrinking paddles creates escalating tension throughout each match.',
+                        montage: 'assets/montages/pong_montage.mp4',
                         gallery: ['assets/Prototypes/digital/pong-o/1.png', 'assets/Prototypes/digital/pong-o/2.png', 'assets/Prototypes/digital/pong-o/3.png']
                     },
                     {
@@ -2208,6 +2404,7 @@
                             '<strong>Memory-Efficient Snake Respawning:</strong> When a snake despawns, two snakes are generated in its place. One of these is the original snake, repositioned outside the viewport and recolored, rather than fully destroyed and recreated. This reuse of objects reduces memory overhead and improves runtime performance, enabling higher snake counts without additional cost'
                         ],
                         devNotes: 'This prototype explores what happens when you remove traditional game pressure entirely. The result is a meditative experience where progression feels rewarding without the anxiety of failure states.',
+                        montage: 'assets/montages/snake_catcher_montage.mp4',
                         gallery: ['assets/Prototypes/digital/snake catcher/1.png', 'assets/Prototypes/digital/snake catcher/2.png', 'assets/Prototypes/digital/snake catcher/3.png']
                     }
                 ]
@@ -2266,6 +2463,13 @@
                 badge.className = `status-badge ${game.status === 'In Development' ? 'status-in-dev' : 'status-completed'}`;
                 badge.textContent = game.status;
                 content.appendChild(badge);
+            }
+
+            if (game.montage) {
+                const montageBadge = document.createElement('span');
+                montageBadge.className = 'montage-badge';
+                montageBadge.innerHTML = `<span class="montage-badge-icon"><svg viewBox="0 0 10 12" fill="#000"><polygon points="1,0 10,6 1,12"/></svg></span>Gameplay`;
+                content.appendChild(montageBadge);
             }
 
             card.appendChild(img);
@@ -2327,7 +2531,7 @@
                     <img src="${game.coverImage}" alt="${game.title}" class="modal-cover-image">
                     <div class="modal-game-info">
                         <h2>${game.title}${game.subtitle ? ' - ' + game.subtitle : ''}</h2>
-                        ${game.status ? `<span class="status-badge ${game.status === 'In Development' ? 'status-in-dev' : 'status-completed'}">${game.status}</span>` : ''}
+                        ${game.status ? `<span class="status-badge ${game.status === 'In Development' ? 'status-in-dev' : 'status-completed'}">${game.status}</span>` : ''}${game.montage ? `<span class="montage-badge"><span class="montage-badge-icon"><svg viewBox="0 0 10 12" fill="#000"><polygon points="1,0 10,6 1,12"/></svg></span>Gameplay</span>` : ''}
                         ${game.date ? `<p class="modal-game-date">${game.date}</p>` : ''}
                         <div class="modal-game-description">${game.description}</div>
                     </div>
@@ -2385,12 +2589,13 @@
                 `;
             }
 
-            if (game.gallery && game.gallery.length > 0) {
+            if ((game.gallery && game.gallery.length > 0) || game.montage) {
                 content += `
                     <div class="modal-section">
                         <h3>Gallery</h3>
                         <div class="modal-gallery">
-                            ${game.gallery.map((img, idx) => `<img src="${img}" class="modal-gallery-thumb" onclick="openImageCarousel(currentGameGallery, ${idx})" alt="Gallery image">`).join('')}
+                            ${game.montage ? `<div class="modal-gallery-video"><video src="${game.montage}" controls preload="metadata" playsinline></video></div>` : ''}
+                            ${(game.gallery || []).map((img, idx) => `<img src="${img}" class="modal-gallery-thumb" onclick="openImageCarousel(currentGameGallery, ${idx})" alt="Gallery image">`).join('')}
                         </div>
                     </div>
                 `;
@@ -2474,7 +2679,10 @@
             const gameModal = document.getElementById('gameModal');
 
             if (event.key === 'Escape') {
-                if (imageModal.classList.contains('active')) {
+                const profileOverlay = document.getElementById('profileOverlay');
+                if (profileOverlay.classList.contains('active')) {
+                    closeProfileImage();
+                } else if (imageModal.classList.contains('active')) {
                     closeImageModal();
                 } else if (gameModal.classList.contains('active')) {
                     closeGameModal();
@@ -2706,34 +2914,170 @@
                     this.stopGame();
                 });
 
-                // Click to change all snake colors
+                // Click to trigger shockwave blast
                 hero.addEventListener('click', (e) => {
-                    // Don't change colors if clicking scroll button or arrow icon
+                    // Don't trigger if clicking scroll button or arrow icon
                     if (e.target.classList.contains('scroll-button') ||
                         e.target.classList.contains('arrow-icon') ||
                         e.target.closest('.scroll-button')) return;
-                    this.changeAllSnakeColors();
+                    if (!this.isActive || !this.heroRect) return;
+
+                    const relX = e.clientX - this.heroRect.left;
+                    const relY = e.clientY - this.heroRect.top;
+                    this.triggerShockwave(relX, relY);
                 });
             },
 
-            changeAllSnakeColors() {
-                if (!this.isActive) return;
+            SHOCKWAVE_DESTROY_RADIUS: 6,
+            SHOCKWAVE_PUSH_RADIUS: 12,
+            SHOCKWAVE_PUSH_FORCE: 8,
+            CHAIN_DESTROY_RADIUS: 4,
+            CHAIN_PUSH_RADIUS: 7,
+            CHAIN_PUSH_FORCE: 5,
 
-                this.snakes.forEach(snake => {
-                    // Get a random color different from the current one
-                    let newColor;
-                    do {
-                        newColor = this.colors[Math.floor(Math.random() * this.colors.length)];
-                    } while (newColor === snake.color && this.colors.length > 1);
+            triggerShockwave(pixelX, pixelY) {
+                this.spawnExplosionVFX(pixelX, pixelY, true);
 
-                    snake.color = newColor;
+                const gridX = Math.floor(pixelX / this.gridSize);
+                const gridY = Math.floor(pixelY / this.gridSize);
 
-                    // Create ripple effect at head position for visual feedback
-                    const head = snake.segments[0];
-                    this.createRipple(head.x, head.y);
-                });
+                const destroyedIds = new Set();
+                this.explodeAt(gridX, gridY, this.SHOCKWAVE_DESTROY_RADIUS, this.SHOCKWAVE_PUSH_RADIUS, this.SHOCKWAVE_PUSH_FORCE, destroyedIds);
 
                 this.renderSnakes();
+            },
+
+            // Recursive chain-reaction explosion
+            explodeAt(gridX, gridY, destroyRadius, pushRadius, pushForce, destroyedIds) {
+                const maxX = Math.floor(this.heroRect.width / this.gridSize);
+                const maxY = Math.floor(this.heroRect.height / this.gridSize);
+                const hero = document.getElementById('heroSection');
+
+                const snakesToDestroy = [];
+
+                this.snakes.forEach(snake => {
+                    if (destroyedIds.has(snake.id)) return;
+
+                    const head = snake.segments[0];
+                    const dx = head.x - gridX;
+                    const dy = head.y - gridY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist <= destroyRadius) {
+                        snakesToDestroy.push(snake);
+                        destroyedIds.add(snake.id);
+                    } else if (dist <= pushRadius) {
+                        const angle = Math.atan2(dy, dx);
+                        const pushDist = Math.round(pushForce * (1 - dist / pushRadius));
+                        const pushX = Math.round(Math.cos(angle) * pushDist);
+                        const pushY = Math.round(Math.sin(angle) * pushDist);
+
+                        snake.segments.forEach(seg => {
+                            seg.x = Math.max(0, Math.min(maxX - 1, seg.x + pushX));
+                            seg.y = Math.max(0, Math.min(maxY - 1, seg.y + pushY));
+                        });
+                    }
+                });
+
+                // Collect chain explosion origins before destroying
+                const chainOrigins = snakesToDestroy.map(snake => ({
+                    headX: snake.segments[0].x,
+                    headY: snake.segments[0].y
+                }));
+
+                // Destroy all snakes simultaneously — debris + removal
+                snakesToDestroy.forEach(snake => {
+                    snake.segments.forEach(seg => {
+                        for (let p = 0; p < 2; p++) {
+                            const debris = document.createElement('div');
+                            debris.className = 'shockwave-particle';
+                            const angle = Math.random() * Math.PI * 2;
+                            const dist = 20 + Math.random() * 40;
+                            debris.style.left = (seg.x * this.gridSize + this.gridSize / 2) + 'px';
+                            debris.style.top = (seg.y * this.gridSize + this.gridSize / 2) + 'px';
+                            debris.style.setProperty('--dx', (Math.cos(angle) * dist) + 'px');
+                            debris.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
+                            debris.style.backgroundColor = snake.color;
+                            hero.appendChild(debris);
+                            setTimeout(() => debris.remove(), 500);
+                        }
+                    });
+
+                    this.removeSnake(snake.id);
+
+                    // Respawn new snakes
+                    setTimeout(() => {
+                        if (this.isActive) {
+                            this.spawnSnake();
+                            setTimeout(() => {
+                                if (this.isActive) {
+                                    this.spawnSnake();
+                                    setTimeout(() => {
+                                        if (this.isActive) this.spawnSnake();
+                                    }, 100);
+                                }
+                            }, 100);
+                        }
+                    }, 300);
+                });
+
+                // Chain explosions fire together after a short beat
+                if (chainOrigins.length > 0) {
+                    setTimeout(() => {
+                        chainOrigins.forEach(origin => {
+                            const chainPixelX = origin.headX * this.gridSize + this.gridSize / 2;
+                            const chainPixelY = origin.headY * this.gridSize + this.gridSize / 2;
+                            this.spawnExplosionVFX(chainPixelX, chainPixelY, false);
+                            this.explodeAt(origin.headX, origin.headY, this.CHAIN_DESTROY_RADIUS, this.CHAIN_PUSH_RADIUS, this.CHAIN_PUSH_FORCE, destroyedIds);
+                        });
+                        this.renderSnakes();
+                    }, 150);
+                }
+            },
+
+            // Spawn visual explosion effects (ring, flash, particles)
+            spawnExplosionVFX(pixelX, pixelY, isMain) {
+                const hero = document.getElementById('heroSection');
+
+                // Shockwave ring
+                const ring = document.createElement('div');
+                ring.className = 'shockwave-ring' + (isMain ? '' : ' chain-ring');
+                ring.style.left = pixelX + 'px';
+                ring.style.top = pixelY + 'px';
+                hero.appendChild(ring);
+                setTimeout(() => ring.remove(), 600);
+
+                // Flash
+                const flash = document.createElement('div');
+                flash.className = 'shockwave-flash';
+                flash.style.left = pixelX + 'px';
+                flash.style.top = pixelY + 'px';
+                hero.appendChild(flash);
+                setTimeout(() => flash.remove(), 300);
+
+                // Screen shake (main blast only)
+                if (isMain) {
+                    hero.classList.remove('screen-shake');
+                    void hero.offsetWidth;
+                    hero.classList.add('screen-shake');
+                    setTimeout(() => hero.classList.remove('screen-shake'), 300);
+                }
+
+                // Burst particles
+                const count = isMain ? 6 : 4;
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'shockwave-particle';
+                    const angle = (Math.PI * 2 * i) / count;
+                    const dist = (isMain ? 40 : 20) + Math.random() * (isMain ? 60 : 30);
+                    particle.style.left = pixelX + 'px';
+                    particle.style.top = pixelY + 'px';
+                    particle.style.setProperty('--dx', (Math.cos(angle) * dist) + 'px');
+                    particle.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
+                    particle.style.backgroundColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    hero.appendChild(particle);
+                    setTimeout(() => particle.remove(), 500);
+                }
             },
 
             createRipple(gridX, gridY) {
