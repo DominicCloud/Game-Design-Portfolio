@@ -301,8 +301,14 @@ function createGameCard(game, category) {
     return card;
 }
 
+// Touch device detection
+function isTouchDevice() {
+    return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
 // Card Tilt Effect
 function addCardTiltEffect(card) {
+    if (isTouchDevice()) return; // skip tilt on touch — hover never fires cleanly
     card.addEventListener('mousemove', function(e) {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -340,7 +346,9 @@ function openGameModal(game, category = 'game') {
         'tabletop': 'TABLETOP PROTOTYPE',
         'digital-prototype': 'DIGITAL PROTOTYPE'
     };
-    modalLabel.textContent = labels[category] || 'GAME';
+    modalLabel.textContent = isTouchDevice()
+        ? 'TAP ✕ TO CLOSE'
+        : (labels[category] || 'GAME');
 
     // Store gallery for carousel
     currentGameGallery = game.gallery || [];
@@ -713,12 +721,20 @@ const SnakeGame = {
     MIN_DESTROY_RADIUS: 6,
     MAX_DESTROY_RADIUS: 12,
     MAX_HOLD_DURATION: 1500,
+    moveInterval: 200,
     holdStartTime: null,
     holdTimer: null,
     chargeEl: null,
     chargeOrigin: null,
 
     init() {
+        if (isTouchDevice()) {
+            this.gridSize             = 14;
+            this.FIXED_SNAKE_LENGTH   = 4;
+            this.CHAIN_DESTROY_RADIUS = 0; // disable chains — small screen causes infinite cascade
+            this.moveInterval         = 320;
+        }
+
         const hero = document.getElementById('heroSection');
         this.heroRect = hero.getBoundingClientRect();
         hero.classList.add('intro-phase');
@@ -744,6 +760,11 @@ const SnakeGame = {
                 }
             }
         });
+
+        // Keep heroRect fresh on resize / orientation change
+        new ResizeObserver(() => {
+            this.heroRect = hero.getBoundingClientRect();
+        }).observe(hero);
 
         // Hero enter/leave — only active after intro
         hero.addEventListener('mouseenter', () => {
@@ -813,8 +834,7 @@ const SnakeGame = {
                 hintCircle.style.setProperty('--progress', '0deg');
             };
 
-            hintCircle.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
+            const startIntroHold = (clientX, clientY) => {
                 if (introFired) return;
                 introHoldStart = Date.now();
                 hintCircle.classList.add('holding');
@@ -825,16 +845,29 @@ const SnakeGame = {
                     if (progress >= 1) {
                         introFired = true;
                         hintCircle.classList.remove('holding');
-                        this.triggerIntroReveal(e.clientX, e.clientY);
+                        this.triggerIntroReveal(clientX, clientY);
                         return;
                     }
                     introRafId = requestAnimationFrame(tick);
                 };
                 introRafId = requestAnimationFrame(tick);
-            });
+            };
 
+            hintCircle.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                startIntroHold(e.clientX, e.clientY);
+            });
             hintCircle.addEventListener('mouseup',    () => cancelIntroHold());
             hintCircle.addEventListener('mouseleave', () => cancelIntroHold());
+
+            // Touch equivalents
+            hintCircle.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const t = e.touches[0];
+                startIntroHold(t.clientX, t.clientY);
+            }, { passive: false });
+            hintCircle.addEventListener('touchend',    () => cancelIntroHold());
+            hintCircle.addEventListener('touchcancel', () => cancelIntroHold());
         }, 500);
     },
 
@@ -953,8 +986,9 @@ const SnakeGame = {
         initHeroTypewriter();
 
         // Cursor is already over the hero so mouseenter won't fire — start manually
+        // Skip on touch devices: no cursor to chase snakes with
         this.heroRect = document.getElementById('heroSection').getBoundingClientRect();
-        this.startGame();
+        if (!isTouchDevice()) this.startGame();
     },
 
     // ── NORMAL PHASE ─────────────────────────────────────────────
@@ -1183,7 +1217,7 @@ const SnakeGame = {
         this.freezeTimeout = setTimeout(() => {
             this.freezeTimeout = null;
             if (this.isActive) {
-                this.snakeInterval = setInterval(() => this.moveSnakes(), 200);
+                this.snakeInterval = setInterval(() => this.moveSnakes(), this.moveInterval);
             }
         }, duration);
     },
@@ -1206,7 +1240,7 @@ const SnakeGame = {
         for (let i = 0; i < 10; i++) {
             setTimeout(() => this.spawnSnake(), i * 100);
         }
-        this.snakeInterval = setInterval(() => this.moveSnakes(), 200);
+        this.snakeInterval = setInterval(() => this.moveSnakes(), this.moveInterval);
     },
 
     stopGame() {
@@ -1741,10 +1775,49 @@ function initAboutAnimation() {
     observer.observe(aboutSection);
 }
 
+// Carousel swipe gesture (touch)
+function initCarouselSwipe() {
+    const modal = document.getElementById('imageModal');
+    let swipeStartX = null;
+    let swipeStartY = null;
+
+    modal.addEventListener('touchstart', (e) => {
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    modal.addEventListener('touchend', (e) => {
+        if (swipeStartX === null) return;
+        const dx = e.changedTouches[0].clientX - swipeStartX;
+        const dy = e.changedTouches[0].clientY - swipeStartY;
+        swipeStartX = null;
+        swipeStartY = null;
+        // Only register horizontal swipes (not accidental scrolls)
+        if (Math.abs(dx) > 50 && Math.abs(dy) < 80) {
+            navigateCarousel(dx < 0 ? 1 : -1);
+        }
+    }, { passive: true });
+}
+
+// Touch tap to flip profile card
+function initTouchCardFlip() {
+    if (!isTouchDevice()) return;
+    const profileCardInner = document.querySelector('.profile-card-inner');
+    const aboutContent = document.querySelector('.about-content');
+    if (!profileCardInner || !aboutContent) return;
+
+    aboutContent.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        profileCardInner.classList.toggle('touch-flipped');
+    });
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     generateGameCards();
     initAboutAnimation();
+    initCarouselSwipe();
+    initTouchCardFlip();
     SnakeGame.init();
     HoldButton.init();
 });
