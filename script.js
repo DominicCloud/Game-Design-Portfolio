@@ -45,7 +45,7 @@ const projectData = {
             subtitle: 'Turn-Based RPG',
             status: 'Completed',
             date: 'January 2026',
-            coverImage: 'assets/Games/Chopstyx/cover.png',
+            coverImage: 'assets/Games/chopstyx/cover.png',
             description: '<a href="https://dominiccloud.itch.io/Chopstyx" target="_blank" rel="noopener noreferrer">🎮 Play Chopstyx on itch.io now!</a><br><br>Chopstyx is a turn-based RPG that reimagines the classic hand game Chopsticks as a mythological duel against Charon, the Ferryman of the Underworld. You play as a damned soul crossing the River Styx when Charon, bored with the endless ferrying of the dead, proposes a game. Defeat him in an intentionally unfair match, and you may earn your freedom.<br><br>Unbeknownst to Charon, you carry the Rings of the Gods—powerful artifacts capable of disturbing the waters of the Styx and bending the rules of the game in your favor.',
             workDone: [
                 'Developed during USC Global Game Jam 2026 (48-hour challenge) with a three-person team',
