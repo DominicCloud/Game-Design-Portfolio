@@ -55,7 +55,7 @@ const projectData = {
             ],
             devNotes: 'Within the limited 48-hour timeframe, we successfully scoped, designed, and built a complete playable experience. The challenge was balancing the classic Chopsticks mechanics with RPG elements while maintaining the mythological narrative.',
             montage: 'https://github.com/DominicCloud/Game-Design-Portfolio/releases/download/v1.0-montages/Chopstyx_montage.mp4',
-            gallery: ['assets/Games/Chopstyx/1.png', 'assets/Games/Chopstyx/2.png', 'assets/Games/Chopstyx/3.png', 'assets/Games/Chopstyx/4.png']
+            gallery: ['assets/Games/chopstyx/1.png', 'assets/Games/chopstyx/2.png', 'assets/Games/chopstyx/3.png', 'assets/Games/chopstyx/4.png']
         },
         {
             id: 'tower-defense',
