@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git lfs:*)",
       "Bash(gh release create:*)",
-      "Bash(where:*)"
+      "Bash(where:*)",
+      "Bash(gh release upload:*)",
+      "Bash(cmd.exe /c \"gh release upload v1.0-montages \"\"S:\\\\portfolio github page\\\\Game-Design-Portfolio\\\\assets\\\\montages\\\\quit_lion_montage.mp4\"\" --repo DominicCloud/Game-Design-Portfolio\")"
     ]
   }
 }

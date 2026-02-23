@@ -31,3 +31,6 @@ npm-debug.log*
 # Temporary files
 *.tmp
 .cache/
+
+# Montage videos — served from GitHub Releases, not needed in repo
+assets/montages/
