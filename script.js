@@ -1812,12 +1812,184 @@ function initTouchCardFlip() {
     });
 }
 
+// Skills Data
+const skillsData = {
+    'Game Design': {
+        color: '#FFE5E8',
+        skills: [
+            { name: 'Godot', level: 5 },
+            { name: 'System-Based Design', level: 5 },
+            { name: 'Level Design', level: 5 },
+            { name: 'Player-Centric Design', level: 5 },
+            { name: 'FSM Architecture', level: 4 },
+            { name: 'AI Programming', level: 4 },
+            { name: 'Procedural Generation', level: 4 },
+            { name: 'Game Balancing', level: 4 },
+            { name: 'Unity', level: 3 },
+            { name: 'Unreal Engine 5', level: 2 }
+        ]
+    },
+    'Programming': {
+        color: '#E6E6FA',
+        skills: [
+            { name: 'C++', level: 5 },
+            { name: 'Python', level: 5 },
+            { name: 'JavaScript', level: 5 },
+            { name: 'GDScript', level: 5 },
+            { name: 'Java', level: 4 },
+            { name: 'C', level: 4 },
+            { name: 'React/Next.js', level: 4 },
+            { name: 'C#', level: 3 },
+            { name: 'Django/Flask', level: 3 }
+        ]
+    },
+    'Graphics & 3D': {
+        color: '#D4F4DD',
+        skills: [
+            { name: 'Ray Tracing', level: 4 },
+            { name: 'Software Rasterization', level: 4 },
+            { name: 'GPU Programming', level: 4 },
+            { name: 'Shader Development', level: 4 },
+            { name: '3D Rendering', level: 4 },
+            { name: 'Blender', level: 4 }
+        ]
+    },
+    'Web Dev': {
+        color: '#FFF3D4',
+        skills: [
+            { name: 'Full-Stack Dev', level: 5 },
+            { name: 'HTML5/CSS3', level: 5 },
+            { name: 'MongoDB', level: 4 },
+            { name: 'REST APIs', level: 4 },
+            { name: 'Node.js', level: 4 },
+            { name: 'Web3 Integration', level: 3 }
+        ]
+    },
+    'Creative': {
+        color: '#FFE5D9',
+        skills: [
+            { name: 'UI/UX Design', level: 5 },
+            { name: 'Adobe Creative Suite', level: 5 },
+            { name: 'Narrative Design', level: 5 },
+            { name: 'Brand Identity', level: 4 },
+            { name: 'Pixel Art', level: 4 },
+            { name: 'Inkscape', level: 4 }
+        ]
+    },
+    'Emerging Tech': {
+        color: '#E8D5FF',
+        skills: [
+            { name: 'Blockchain/Web3', level: 4 },
+            { name: 'Smart Contracts', level: 4 },
+            { name: 'Machine Learning', level: 3 },
+            { name: 'Azure AI', level: 2 }
+        ]
+    }
+};
+
+function generateSkillsSection() {
+    const filtersContainer = document.getElementById('skillsFilters');
+    const gridContainer = document.getElementById('skillsGrid');
+
+    // Create "All" filter button
+    const allBtn = document.createElement('button');
+    allBtn.className = 'skill-filter-btn active';
+    allBtn.textContent = 'All';
+    allBtn.onclick = () => filterSkills('All');
+    filtersContainer.appendChild(allBtn);
+
+    // Create category filter buttons
+    for (const category in skillsData) {
+        const btn = document.createElement('button');
+        btn.className = 'skill-filter-btn';
+        btn.textContent = category;
+        btn.onclick = () => filterSkills(category);
+        filtersContainer.appendChild(btn);
+    }
+
+    // Create skill cards
+    for (const category in skillsData) {
+        const categoryData = skillsData[category];
+        categoryData.skills.forEach(skill => {
+            const card = document.createElement('div');
+            card.className = 'skill-card';
+            card.setAttribute('data-category', category);
+            card.style.setProperty('--skill-color', categoryData.color);
+
+            const nameEl = document.createElement('div');
+            nameEl.className = 'skill-name';
+            nameEl.textContent = skill.name;
+            card.appendChild(nameEl);
+
+            const pipsContainer = document.createElement('div');
+            pipsContainer.className = 'skill-pips';
+            for (let i = 0; i < 5; i++) {
+                const pip = document.createElement('div');
+                pip.className = 'pip';
+                if (i < skill.level) {
+                    pip.classList.add('filled');
+                }
+                pipsContainer.appendChild(pip);
+            }
+            card.appendChild(pipsContainer);
+
+            gridContainer.appendChild(card);
+        });
+    }
+}
+
+function filterSkills(category) {
+    const buttons = document.querySelectorAll('.skill-filter-btn');
+    const cards = document.querySelectorAll('.skill-card');
+
+    // Update button states
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if ((category === 'All' && btn.textContent === 'All') ||
+            (category !== 'All' && btn.textContent === category)) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Filter cards
+    cards.forEach(card => {
+        if (category === 'All' || card.getAttribute('data-category') === category) {
+            card.classList.remove('filtered-out');
+        } else {
+            card.classList.add('filtered-out');
+        }
+    });
+}
+
+function initSkillsAnimation() {
+    const skillsSection = document.getElementById('skillsSection');
+    if (!skillsSection) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const cards = entry.target.querySelectorAll('.skill-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('animated');
+                    }, index * 80);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(skillsSection);
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     generateGameCards();
     initAboutAnimation();
     initCarouselSwipe();
     initTouchCardFlip();
+    generateSkillsSection();
+    initSkillsAnimation();
     SnakeGame.init();
     HoldButton.init();
 });
