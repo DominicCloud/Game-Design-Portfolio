@@ -2406,8 +2406,7 @@ body {
 
 .skill-card.filtered-out {
     opacity: 0.15;
-    transform: scale(0.95);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 .skill-card:hover {

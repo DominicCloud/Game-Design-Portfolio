@@ -40,6 +40,24 @@ const projectData = {
             gallery: ['assets/Games/bardo/1.png', 'assets/Games/bardo/2.png', 'assets/Games/bardo/3.png', 'assets/Games/bardo/game art 2.jpg']
         },
         {
+            id: 'sunburnt',
+            title: 'Sunburnt',
+            subtitle: 'Atmospheric Narrative Game',
+            status: 'Completed',
+            date: 'April 2026',
+            coverImage: 'assets/Games/sunburnt/pexels-pixabay-257092.jpg',
+            description: '<a href="https://dominiccloud.itch.io/sunburnt" target="_blank" rel="noopener noreferrer">🎮 Play Sunburnt on itch.io now!</a><br><br>Sunburnt is a short atmospheric narrative game built around a single, one-minute path. You play as an umbrella, hovering above a young boy and shielding him from the sun as he walks forward. Straying too far or losing your positioning lets the sun catch him, so every step is a quiet balancing act between guidance and protection.<br><br>The path ends at a grave, recontextualizing everything that came before it: the boy is not just out for a walk, he\'s visiting his late mother. The reveal is designed to send players straight back into a second playthrough, this time reading every prior beat differently.',
+            designGoal: 'Deliver an emotional gut-punch in under a minute by pairing a simple, tactile protection mechanic with a narrative twist that recontextualizes the entire experience in hindsight, deliberately built to reward a second playthrough.',
+            workDone: [
+                '<strong>Level Design:</strong> Paced the single walking path so environmental beats land in rhythm with the escalating emotional tone, guiding the player toward the grave reveal without any explicit exposition',
+                '<strong>Lead Engineer:</strong> Directed technical implementation across the team, building the core umbrella-follow and sun-exposure mechanics',
+                '<strong>Narrative Design:</strong> Structured the story to be told entirely through environmental and mechanical framing rather than dialogue or text, so the twist lands purely through player interpretation',
+                '<strong>Game Design:</strong> Balanced the shielding mechanic\'s tolerance and the boy\'s walking pace so the moment-to-moment challenge stays gentle enough not to distract from the narrative'
+            ],
+            devNotes: 'The biggest design challenge was making a one-minute experience worth replaying. Since the twist recontextualizes rather than adds new content, every mechanical and environmental detail had to be worth a second look once players know what the walk actually is.',
+            gallery: ['assets/Games/sunburnt/pexels-pixabay-257092.jpg', 'assets/Games/sunburnt/Multicolored painting-original.jpg', 'assets/Games/sunburnt/Night Aurora Snow-original.jpg']
+        },
+        {
             id: 'Chopstyx',
             title: 'Chopstyx',
             subtitle: 'Turn-Based RPG',
@@ -1908,12 +1926,14 @@ function generateSkillsSection() {
     }
 
     // Create skill cards
+    let skillIndex = 0;
     for (const category in skillsData) {
         const categoryData = skillsData[category];
         categoryData.skills.forEach(skill => {
             const card = document.createElement('div');
             card.className = 'skill-card';
             card.setAttribute('data-category', category);
+            card.setAttribute('data-index', skillIndex++);
             card.style.setProperty('--skill-color', categoryData.color);
 
             const nameEl = document.createElement('div');
@@ -1940,7 +1960,9 @@ function generateSkillsSection() {
 
 function filterSkills(category) {
     const buttons = document.querySelectorAll('.skill-filter-btn');
-    const cards = document.querySelectorAll('.skill-card');
+    const grid = document.getElementById('skillsGrid');
+    const cards = Array.from(grid.children);
+    const byIndex = (a, b) => Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
 
     // Update button states
     buttons.forEach(btn => {
@@ -1951,13 +1973,45 @@ function filterSkills(category) {
         }
     });
 
-    // Filter cards
+    // FIRST: record each card's current position before anything moves
+    const firstRects = new Map(cards.map(card => [card, card.getBoundingClientRect()]));
+
+    // Update matched/dimmed state
     cards.forEach(card => {
-        if (category === 'All' || card.getAttribute('data-category') === category) {
-            card.classList.remove('filtered-out');
-        } else {
-            card.classList.add('filtered-out');
-        }
+        const matches = category === 'All' || card.getAttribute('data-category') === category;
+        card.classList.toggle('filtered-out', !matches);
+    });
+
+    // Reorder the DOM: matching skills rise to the top (in their original relative
+    // order), everything else follows — restoring pristine grouped order for 'All'
+    const matching = cards.filter(c => !c.classList.contains('filtered-out')).sort(byIndex);
+    const rest = cards.filter(c => c.classList.contains('filtered-out')).sort(byIndex);
+    [...matching, ...rest].forEach(card => grid.appendChild(card));
+
+    // LAST + INVERT + PLAY: measure the new position, offset back to the old one
+    // instantly, then animate that offset away so the move reads as a slide
+    cards.forEach(card => {
+        const firstRect = firstRects.get(card);
+        const lastRect = card.getBoundingClientRect();
+        const dx = firstRect.left - lastRect.left;
+        const dy = firstRect.top - lastRect.top;
+
+        if (!dx && !dy) return;
+
+        card.style.transition = 'none';
+        card.style.transform = `translate(${dx}px, ${dy}px)`;
+        card.getBoundingClientRect(); // force reflow so the inverted position takes hold
+
+        requestAnimationFrame(() => {
+            card.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease';
+            card.style.transform = '';
+        });
+
+        card.addEventListener('transitionend', function onEnd(e) {
+            if (e.propertyName !== 'transform') return;
+            card.style.transition = '';
+            card.removeEventListener('transitionend', onEnd);
+        });
     });
 }
 
